@@ -56,7 +56,7 @@ mymodule/
 └── secret.py
 ```
 
-And we want to generate documentation for this package in some directory `doc/`.
+And we want to generate documentation for this package in some directory `docs/`.
 
 ## A short comparison
 
