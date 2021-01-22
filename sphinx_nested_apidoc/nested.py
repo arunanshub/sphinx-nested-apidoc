@@ -95,6 +95,8 @@ def rename_rsts(moddir, srcdir, destdir=None):
             basefile = path.basename(file)
 
             if basefile == as_dot + ".rst":
+                if basefile == modname + ".rst":
+                    continue
                 new = path.join(dest, "index.rst")
 
                 logger.info(f"{file} -> {new}")
