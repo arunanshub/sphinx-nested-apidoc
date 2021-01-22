@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="sphinx-nested-apidoc",
-    version="0.1.0",
+    version="0.2.0",
     author="Arunanshu Biswas",
     author_email="mydellpc07@gmail.com",
     description="sphinx-nested-apidoc: When flattened is not enough",

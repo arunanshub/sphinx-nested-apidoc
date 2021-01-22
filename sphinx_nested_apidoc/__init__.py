@@ -5,7 +5,7 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 LOGGER_FORMAT = "{levelname:>8}: {message}"
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 def start_logging(level=logging.DEBUG, fmt=LOGGER_FORMAT):
