@@ -128,6 +128,7 @@ docs/
 ├── base.rst
 ├── exceptions.rst
 ├── modules.rst
+├── mymodule.rst
 └── secret.rst
 ```
 
