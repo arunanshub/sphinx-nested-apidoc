@@ -1,5 +1,11 @@
 # sphinx-nested-apidoc
 
+<p align="center">
+  <a href="https://pypi.org/project/sphinx-nested-apidoc/" alt="Upload Python Package">
+    <img src="https://github.com/arunanshub/sphinx-nested-apidoc/workflows/Upload%20Python%20Package/badge.svg" />
+  </a>
+</p>
+
 When flattened is not enough.
 
 # Installation
