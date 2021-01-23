@@ -98,22 +98,7 @@ def rename_rsts(moddir, srcdir, destdir=None, force=False):
                 if basefile == modname + ".rst":
                     continue
                 new = path.join(dest, "index.rst")
-                if os.path.exists(new):
-                    if not force:
-                        logger.info(
-                            f"Skipping generation of {new}. Only removing {file}"
-                        )
-                        os.remove(file)
-                        continue
-
-                try:
-                    os.rename(file, new)
-                    logger.info(f"{file} -> {new}")
-                except FileExistsError:
-                    logger.info(f"Forced: {new} exists. Removing.")
-                    os.remove(new)
-                    os.rename(file, new)
-                    logger.info(f"Forced: {file} -> {new}")
+                _try_rename(file, new, force)
                 continue
 
             last_two_parts = ".".join(basefile.rsplit(".", 2)[-2:])
@@ -124,19 +109,23 @@ def rename_rsts(moddir, srcdir, destdir=None, force=False):
                         f"Assumption failed: {new} is a dir {part}. Skipping."
                     )
                     continue
-                if os.path.exists(new):
-                    if not force:
-                        logger.info(
-                            f"Skipping generation of {new}. Only removing {file}"
-                        )
-                        os.remove(file)
-                        continue
+                _try_rename(file, new, force)
 
-                try:
-                    os.rename(file, new)
-                    logger.info(f"{file} -> {new}")
-                except FileExistsError:
-                    logger.info(f"Forced: {new} exists. Removing.")
-                    os.remove(new)
-                    os.rename(file, new)
-                    logger.info(f"Forced: {file} -> {new}")
+
+def _try_rename(file, new, force):
+    if os.path.exists(new):
+        if not force:
+            logger.info(
+                f"Skipping generation of {new}. Only removing {file}"
+            )
+            os.remove(file)
+            return
+
+    try:
+        os.rename(file, new)
+        logger.info(f"{file} -> {new}")
+    except FileExistsError:
+        logger.info(f"Forced: {new} exists. Removing.")
+        os.remove(new)
+        os.rename(file, new)
+        logger.info(f"Forced: {file} -> {new}")
