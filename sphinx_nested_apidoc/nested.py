@@ -73,7 +73,7 @@ def make_package_stucture(
             pass
 
 
-def rename_rsts(moddir, srcdir, destdir=None):
+def rename_rsts(moddir, srcdir, destdir=None, force=False):
     # moddir will be used to compare the directory structure.
     # srcdir should have the .rst files already present.
     # destdir is where the nested structure will be kept.
@@ -98,6 +98,12 @@ def rename_rsts(moddir, srcdir, destdir=None):
                 if basefile == modname + ".rst":
                     continue
                 new = path.join(dest, "index.rst")
+                if os.path.exists(new) and not force:
+                    logger.info(
+                        f"Skipping generation of {new}. Only removing {file}"
+                    )
+                    os.remove(file)
+                    continue
 
                 logger.info(f"{file} -> {new}")
                 os.rename(file, new)
@@ -110,6 +116,12 @@ def rename_rsts(moddir, srcdir, destdir=None):
                     logger.debug(
                         f"Assumption failed: {new} is a dir {part}. Skipping."
                     )
+                    continue
+                if os.path.exists(new) and not force:
+                    logger.info(
+                        f"Skipping generation of {new}. Only removing {file}"
+                    )
+                    os.remove(file)
                     continue
 
                 logger.info(f"{file} -> {new}")

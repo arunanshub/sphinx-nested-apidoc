@@ -64,6 +64,12 @@ def main():
         help="Path to package to document.",
     )
     ps.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="Replace existing files.",
+    )
+    ps.add_argument(
         "-o",
         "--output-dir",
         dest="destdir",
@@ -86,11 +92,15 @@ def main():
             verbose = args.verbose
         start_logging(logging_levels[verbose])
 
+    sphinx_commands = args.sphinx_commands
+    if args.force:
+        sphinx_commands.append("-f")
+
     retcode = feed_sphinx_apidoc(
         "-o",
         args.destdir,
         args.module_path,
-        *args.sphinx_commands,
+        *sphinx_commands,  # can filter sphinx commands
     )
 
     if (
@@ -99,7 +109,7 @@ def main():
         or "--help" in args.sphinx_commands
     ):
         ps.exit(retcode)
-    rename_rsts(args.module_path, args.destdir)
+    rename_rsts(args.module_path, args.destdir, force=args.force)
 
 
 if __name__ == "__main__":
