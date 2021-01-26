@@ -137,7 +137,7 @@ Looks clean!
 # Usage Details
 
 ```
-usage: sphinx-nested-apidoc [-h] [-v | -q] [--version] -o DESTDIR
+usage: sphinx-nested-apidoc [-h] [-v | -q] [--version] [-f] -o DESTDIR
                             module_path ...
 
 sphinx-nested-apidoc: When flattened is not enough. sphinx-nested-apidoc is a
@@ -158,6 +158,7 @@ optional arguments:
   -q, --quiet           Disable logging. This option cannot be used when
                         -v/--verbose is used.
   --version             show program's version number and exit
+  -f, --force           Replace existing files.
   -o DESTDIR, --output-dir DESTDIR
                         directory to place all output
 
