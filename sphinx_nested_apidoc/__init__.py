@@ -3,7 +3,7 @@ import logging
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-LOGGER_FORMAT = "{levelname:>8}: {message}"
+LOGGER_FORMAT = "[{levelname:<8}]: {message}"
 
 __version__ = "0.3.0"
 

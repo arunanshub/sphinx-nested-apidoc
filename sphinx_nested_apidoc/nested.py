@@ -115,9 +115,7 @@ def rename_rsts(moddir, srcdir, destdir=None, force=False):
 def _try_rename(file, new, force):
     if os.path.exists(new):
         if not force:
-            logger.info(
-                f"Skipping generation of {new}. Only removing {file}"
-            )
+            logger.info(f"Skipping generation of {new}. Only removing {file}")
             os.remove(file)
             return
 
