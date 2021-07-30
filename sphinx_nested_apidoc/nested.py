@@ -1,10 +1,8 @@
-import os
 import glob
-import subprocess
 import logging
-
+import os
+import subprocess
 from os import path
-
 
 logger = logging.getLogger(__name__)
 

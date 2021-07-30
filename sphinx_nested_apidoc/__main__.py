@@ -1,8 +1,8 @@
 import argparse
 import logging
-from .nested import feed_sphinx_apidoc, rename_rsts
-from . import start_logging, __version__
 
+from . import __version__, start_logging
+from .nested import feed_sphinx_apidoc, rename_rsts
 
 APP_NAME = "sphinx-nested-apidoc"
 

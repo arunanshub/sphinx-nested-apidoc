@@ -1,6 +1,5 @@
 import logging
 
-
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 LOGGER_FORMAT = "[{levelname:<8}]: {message}"
