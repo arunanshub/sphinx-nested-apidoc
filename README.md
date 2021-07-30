@@ -62,7 +62,7 @@ And we want to generate documentation for this package in some directory `docs/`
 
 Let's see the difference.
 
-### Using `sphinx-apidoc` we get:
+### Using `sphinx-apidoc` we get
 
 We use the following command:
 
@@ -96,7 +96,7 @@ docs/
 
 This is not very clean, obviously.
 
-### Using `sphinx-nested-apidoc` we get:
+### Using `sphinx-nested-apidoc` we get
 
 We use the following command:
 
