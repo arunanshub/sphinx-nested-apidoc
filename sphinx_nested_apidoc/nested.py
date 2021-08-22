@@ -102,7 +102,8 @@ def rename_rsts(moddir, srcdir, destdir=None, force=False):
             last_two_parts = ".".join(basefile.rsplit(".", 2)[-2:])
             if basefile == ".".join((as_dot, last_two_parts)):
                 new = path.join(dest, last_two_parts)
-                if path.isdir((part := path.splitext(new)[0])):
+                part = path.splitext(new)[0]
+                if path.isdir(part):
                     logger.debug(
                         f"Assumption failed: {new} is a dir {part}. Skipping."
                     )
