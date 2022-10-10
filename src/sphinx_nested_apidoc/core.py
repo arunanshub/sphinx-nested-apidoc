@@ -79,7 +79,6 @@ def yield_source_files(
         raise ValueError("extension must not start with '.'")
 
     pattern = path.join(
-        # path.abspath(source_dir),
         path.normpath(source_dir),
         f"*{path.extsep}{extension}",
     )
