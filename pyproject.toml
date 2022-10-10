@@ -39,7 +39,7 @@ pytest-cov = "^4.0.0"
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-furo = "^2022.9.29"
+furo = ">=2022.9.29"
 
 [build-system]
 requires = ["poetry-core"]
