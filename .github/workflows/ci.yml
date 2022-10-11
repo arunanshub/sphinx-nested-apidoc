@@ -79,8 +79,9 @@ jobs:
         uses: commitizen-tools/commitizen-action@0.15.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          changelog_incremental_filename: body.md
+          changelog_increment_filename: body.md
           push: false
+          commit: false
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
