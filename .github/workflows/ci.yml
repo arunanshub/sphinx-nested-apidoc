@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    # branches: [master]
+    branches: [master]
     tags: ["v*.*.*"]
   pull_request:
     branches: [master]
@@ -12,25 +12,7 @@ defaults:
     shell: bash
 
 jobs:
-  temporary:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - run: pipx install commitizen
-
-      - name: Get 2nd-last commit tag
-        id: second-last
-        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -2 | head -1)"
-
-      - name: Generate Changelog
-        run: |
-          cz ch --dry-run --start-rev '${{ steps.second-last.outputs.tag }}' --unreleased-version '${{ github.ref_name }}'
-
   lint:
-    needs: [temporary]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -92,32 +74,40 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      # - name: Generate Incremental Changelog
-      #   uses: commitizen-tools/commitizen-action@0.15.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     changelog_increment_filename: body.md
-      #     push: false
-      #     commit: false
-      #
-      # - name: Create Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     body_path: body.md
-      #     tag_name: v${{ env.REVISION }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install commitizen
+        run: pipx install commitizen
 
-      # - name: Install Poetry
-      #   run: pipx install poetry
-      #
-      # - name: Set Up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '>=3.8'
-      #     cache: 'poetry'
-      #
-      # - name: Publish Package
-      #   run: poetry publish --build -u __token__ -p "$PYPI_PASSWORD"
-      #   env:
-      #     PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      - name: Get 2nd-last commit tag
+        id: second-last
+        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -2 | head -1)"
+
+      - name: Generate Changelog
+        run: |
+          # from 2nd-last revision upto this current tag.
+          cz ch --start-rev '${{ steps.second-last.outputs.tag }}' \
+            --unreleased-version '${{ github.ref_name }}' \
+            --file-name body.md
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: body.md
+          tag_name: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '>=3.8'
+          cache: 'poetry'
+
+      - name: Publish Package
+        run: poetry publish --build -u __token__ -p "$PYPI_PASSWORD"
+        env:
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
