@@ -1,10 +1,9 @@
 # sphinx-nested-apidoc
 
-<p align="center">
-  <a href="https://pypi.org/project/sphinx-nested-apidoc/" alt="Upload Python Package">
-    <img src="https://github.com/arunanshub/sphinx-nested-apidoc/workflows/Upload%20Python%20Package/badge.svg" />
-  </a>
-</p>
+[![CI](https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/sphinx-nested-apidoc)](https://pypi.org/project/sphinx-nested-apidoc)
 
 When flattened is not enough.
 
