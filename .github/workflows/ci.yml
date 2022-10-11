@@ -83,9 +83,10 @@ jobs:
       #     push: false
       #     commit: false
       #
+      - run: pipx install commitizen
+
       - name: Get Last commit
-        run: |
-          export LAST_COMMIT=$(git tag --sort=-creatordate | tail -n 1)
+        run: export LAST_COMMIT=$(git tag --sort=-creatordate | tail -n 1)
 
       - name: Generate Changelog
         run: cz ch --dry-run "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
