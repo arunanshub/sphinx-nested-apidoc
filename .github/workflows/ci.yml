@@ -86,10 +86,12 @@ jobs:
       - run: pipx install commitizen
 
       - name: Get Last commit
-        run: export LAST_COMMIT=$(git tag --sort=-creatordate | tail -n 1)
+        run: export LAST_COMMIT="$(git tag --sort=-creatordate | tail -n 1)"
 
       - name: Generate Changelog
-        run: cz ch --dry-run --start-rev "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
+        run: |
+          echo "$LAST_COMMIT"
+          cz ch --dry-run --start-rev "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
 
       # - name: Create Release
       #   uses: softprops/action-gh-release@v1
