@@ -24,7 +24,7 @@ jobs:
   publish:
     needs: [build]
     runs-on: ubuntu-latest
-    if: ${{ github.ref-name == "v*.*.*" }}
+    if: ${{ github.ref_type == "tag" }}
 
     steps:
       - uses: actions/checkout@v3
