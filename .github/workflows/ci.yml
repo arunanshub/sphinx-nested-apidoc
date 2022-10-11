@@ -89,7 +89,7 @@ jobs:
         run: export LAST_COMMIT=$(git tag --sort=-creatordate | tail -n 1)
 
       - name: Generate Changelog
-        run: cz ch --dry-run "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
+        run: cz ch --dry-run --start-rev "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
 
       # - name: Create Release
       #   uses: softprops/action-gh-release@v1
