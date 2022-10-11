@@ -87,7 +87,7 @@ jobs:
 
       - name: Get Last commit
         id: last_commit
-        run: echo "::set-output name=last_commit::$(git tag --sort=-creatordate | tail -n 1)"
+        run: echo "::set-output name=last_commit::$(git tag --sort=creatordate | tail -n 1)"
 
       - name: Generate Changelog
         run: |
