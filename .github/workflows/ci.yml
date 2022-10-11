@@ -75,31 +75,38 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Generate Incremental Changelog
-        uses: commitizen-tools/commitizen-action@0.15.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          changelog_increment_filename: body.md
-          push: false
-          commit: false
+      # - name: Generate Incremental Changelog
+      #   uses: commitizen-tools/commitizen-action@0.15.0
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     changelog_increment_filename: body.md
+      #     push: false
+      #     commit: false
+      #
+      - name: Get Last commit
+        run: |
+          export LAST_COMMIT=$(git tag --sort=-creatordate | tail -n 1)
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body_path: body.md
-          tag_name: v${{ env.REVISION }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Changelog
+        run: cz ch --dry-run "$LAST_COMMIT" --unreleased-version '${{ github.ref_name }}'
 
-      - name: Install Poetry
-        run: pipx install poetry
+      # - name: Create Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     body_path: body.md
+      #     tag_name: v${{ env.REVISION }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set Up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '>=3.8'
-          cache: 'poetry'
-
-      - name: Publish Package
-        run: poetry publish --build -u __token__ -p "$PYPI_PASSWORD"
-        env:
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      # - name: Install Poetry
+      #   run: pipx install poetry
+      #
+      # - name: Set Up Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '>=3.8'
+      #     cache: 'poetry'
+      #
+      # - name: Publish Package
+      #   run: poetry publish --build -u __token__ -p "$PYPI_PASSWORD"
+      #   env:
+      #     PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
