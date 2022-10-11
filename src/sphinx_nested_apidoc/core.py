@@ -10,9 +10,14 @@ from typing import Iterator
 logger = logging.getLogger(__name__)
 
 
-def _add_flag_if_not_present(arg: list[str], flag: bool, name: str) -> None:
-    if flag and name not in arg:
-        arg.append("--implicit-namespaces")
+def _add_flag_if_not_present(
+    arg: list[str],
+    cond: bool,
+    short_flag: str | None,
+    flag: str,
+) -> None:
+    if cond and (flag not in arg or short_flag not in arg):
+        arg.append(flag)
 
 
 def feed_sphinx_apidoc(
@@ -35,29 +40,40 @@ def feed_sphinx_apidoc(
         True if help flag is passed, otherwise False.
 
     Raises:
-        ValueError: If ``sphinx-apidoc`` exited with non-zero exit code.
+        CalledProcessError:
+            If ``sphinx-apidoc`` exited with non-zero exit code.
     """
+    # `--separate` puts documentation for each module on its own page.
     arguments = ["sphinx-apidoc", "--separate", "--suffix", suffix, *args]
 
     # show help info if user passes help flag.
-    help_flags = ("--help", "-h")
+    # NOTE: sphinx-apidoc's cmdline parser allows long options to be
+    # abbreviated to a prefix. We can prevent it by using itertools.accumulate,
+    # but choose to trust the user.
+    help_flags = ("-h", "--help")
     if any(flag in args for flag in help_flags):
         stdout = None
         is_help = True
     else:
         is_help = False
-        stdout = subprocess.PIPE
-        # `--separate` puts documentation for each module on its own page.
+        stdout = subprocess.DEVNULL
         _add_flag_if_not_present(
             arguments,
             implicit_namespaces,
+            None,
             "--implicit-namespaces",
         )
-        _add_flag_if_not_present(arguments, force, "--force")
+        _add_flag_if_not_present(arguments, force, "-f", "--force")
 
-    with subprocess.Popen(arguments, stdout=stdout) as proc:
-        if proc.wait():
-            raise ValueError("sphinx-apidoc exited with non-zero exit code")
+        # if sphinx-apidoc is dry running, we cannot locate the generated
+        # files.
+        if "-n" in arguments:
+            arguments.remove("-n")
+        if "--dry-run" in arguments:
+            arguments.remove("--dry-run")
+
+    logger.debug("arguments: %s", arguments)
+    subprocess.check_call(arguments, stdout=stdout)
 
     return is_help
 
