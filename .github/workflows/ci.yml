@@ -16,15 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - run: pipx install commitizen
 
-      - name: Get Last commit
+      - name: Get Last commit tag
         id: last_commit
-        run: echo "::set-output name=last_commit::$(git tag --sort=creatordate | tail -n 1)"
+        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -n 1)"
 
       - name: Generate Changelog
         run: |
-          cz ch --dry-run --start-rev 'v0.3.2' --unreleased-version '${{ github.ref_name }}'
+          cz ch --dry-run --start-rev '{{ steps.last_commit.outputs.tag }}' --unreleased-version '${{ github.ref_name }}'
 
   lint:
     needs: [temporary]
