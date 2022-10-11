@@ -1,6 +1,3 @@
-# This workflow will upload a Python Package using Twine when a release is created
-# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
-
 name: CI
 
 on:
@@ -15,7 +12,37 @@ defaults:
     shell: bash
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        id: setup-python
+        with:
+          python-version: ">=3.8"
+          cache: poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Cache Pre-Commit Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Lint with Mypy and Flake8
+        run: |
+          poetry run pre-commit run --all mypy
+          poetry run pre-commit run --all flake8
+
   build:
+    needs: [lint]
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -37,12 +64,6 @@ jobs:
 
       - name: Install Dependencies
         run: poetry install --no-interaction
-
-      # TODO: We can move this to lint step
-      - name: Lint with Mypy and Flake8
-        run: |
-          poetry run pre-commit run --all mypy
-          poetry run pre-commit run --all flake8
 
       # TODO: add testing steps
 
