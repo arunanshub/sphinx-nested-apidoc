@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    # branches: [master]
     tags: ["v*.*.*"]
   pull_request:
     branches: [master]
@@ -12,7 +12,21 @@ defaults:
     shell: bash
 
 jobs:
+  temporary:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pipx install commitizen
+
+      - name: Get Last commit
+        id: last_commit
+        run: echo "::set-output name=last_commit::$(git tag --sort=creatordate | tail -n 1)"
+
+      - name: Generate Changelog
+        run: |
+          cz ch --dry-run --start-rev '${{ steps.last_commit.output.last_commit }}' --unreleased-version '${{ github.ref_name }}'
+
   lint:
+    needs: [temporary]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,16 +97,6 @@ jobs:
       #     push: false
       #     commit: false
       #
-      - run: pipx install commitizen
-
-      - name: Get Last commit
-        id: last_commit
-        run: echo "::set-output name=last_commit::$(git tag --sort=creatordate | tail -n 1)"
-
-      - name: Generate Changelog
-        run: |
-          cz ch --dry-run --start-rev '${{ steps.last_commit.output.last_commit }}' --unreleased-version '${{ github.ref_name }}'
-
       # - name: Create Release
       #   uses: softprops/action-gh-release@v1
       #   with:
