@@ -7,19 +7,41 @@ on:
   push:
     branches: [master]
     tags: ["v*.*.*"]
+  pull_request:
+    branches: [master]
 
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        python-version: [3.8]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.8, 3.9, "3.10"]
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+
+      - name: Install Dependencies
+        run: poetry install --no-interaction
+
+      # TODO: We can move this to lint step
+      - name: Lint with Mypy and Flake8
+        run: |
+          poetry run pre-commit run --all mypy
+          poetry run pre-commit run --all flake8
+
+      # TODO: add testing steps
 
   publish:
     needs: [build]
@@ -28,4 +50,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo "test"
+
+      - name: Generate Incremental Changelog
+        uses: commitizen-tools/commitizen-action@0.15.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog_incremental_filename: body.md
+          push: false
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: body.md
+          tag_name: v${{ env.REVISION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '>=3.8'
+          cache: 'poetry'
+
+      - name: Publish Package
+        run: poetry publish --build -u __token__ -p "$PYPI_PASSWORD"
+        env:
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
