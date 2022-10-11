@@ -21,13 +21,13 @@ jobs:
 
       - run: pipx install commitizen
 
-      - name: Get Last commit tag
-        id: last_commit
-        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -n 1)"
+      - name: Get 2nd-last commit tag
+        id: second-last
+        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -2 | head -1)"
 
       - name: Generate Changelog
         run: |
-          cz ch --dry-run --start-rev '${{ steps.last_commit.outputs.tag }}' --unreleased-version '${{ github.ref_name }}'
+          cz ch --dry-run --start-rev '${{ steps.second-last.outputs.tag }}' --unreleased-version '${{ github.ref_name }}'
 
   lint:
     needs: [temporary]
