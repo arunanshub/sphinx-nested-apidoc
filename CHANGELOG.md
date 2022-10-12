@@ -1,3 +1,10 @@
+## v1.1.0 (2022-10-12)
+
+### Feat
+
+- **main**: allow passing list of str to main; pass `force` flag for renaming
+- **core**: use `apidoc.main` instead of `subprocess`; use `force` flag for renaming
+
 ## v1.0.0 (2022-10-12)
 
 ### BREAKING CHANGE
