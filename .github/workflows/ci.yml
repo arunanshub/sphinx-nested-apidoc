@@ -82,7 +82,14 @@ jobs:
 
       - name: Get 2nd-last commit tag
         id: second-last
-        run: echo "::set-output name=tag::$(git tag --sort=creatordate | tail -2 | head -1)"
+        run: |
+          tags="$(git tag --sort=creatordate)"
+          output=''
+          # length > 1 means we have multiple tags and we need 2nd last one
+          if [[ "$(echo "$(tags)" | grep -c ^)" != "1" ]]; then
+            output="$(echo "$tags" | tail -2 | head -1)"
+          else
+            echo "::set-output name=tag::$output"
 
       - name: Generate Changelog
         run: |
