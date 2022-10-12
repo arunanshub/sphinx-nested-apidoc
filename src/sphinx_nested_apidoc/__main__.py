@@ -24,7 +24,7 @@ Visit <https://github.com/arunanshub/sphinx-nested-apidoc> for more info.
 """
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     logging_levels = {
         3: logging.WARNING,
         4: logging.INFO,
@@ -107,7 +107,7 @@ def main() -> None:
         metavar="...",
     )
 
-    args = ps.parse_args()
+    args = ps.parse_args(argv)
     if not args.quiet:
         verbose = args.verbose
         if args.verbose > 5:
@@ -137,6 +137,7 @@ def main() -> None:
         implicit_namespaces=args.implicit_namespaces,
         extension=args.suffix,
         dry_run=args.dry_run,
+        force=args.force,
     )
 
 
