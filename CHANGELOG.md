@@ -1,3 +1,9 @@
+## v1.1.1 (2022-10-12)
+
+### Fix
+
+- **main**: remove unnecessary exception blocks; return `int` from main
+
 ## v1.1.0 (2022-10-12)
 
 ### Feat
