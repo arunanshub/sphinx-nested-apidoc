@@ -41,10 +41,6 @@ def feed_sphinx_apidoc(
 
     Returns:
         True if help flag is passed, otherwise False.
-
-    Raises:
-        CalledProcessError:
-            If ``sphinx-apidoc`` exited with non-zero exit code.
     """
     # `--separate` puts documentation for each module on its own page.
     arguments = ["--separate", "--suffix", suffix, *args]
@@ -95,6 +91,9 @@ def yield_source_files(
 
     Yields:
         Path to file that end with ``extension``.
+
+    Raises:
+        ValueError: If extension starts with a ".".
     """
     if extension.startswith("."):
         raise ValueError("extension must not start with '.'")
