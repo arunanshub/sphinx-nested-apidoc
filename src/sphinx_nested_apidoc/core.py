@@ -3,9 +3,12 @@ from __future__ import annotations
 import glob
 import logging
 import os
-import subprocess
+import sys
+from contextlib import redirect_stdout
 from os import path
 from typing import Iterator
+
+from sphinx.ext import apidoc
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +47,7 @@ def feed_sphinx_apidoc(
             If ``sphinx-apidoc`` exited with non-zero exit code.
     """
     # `--separate` puts documentation for each module on its own page.
-    arguments = ["sphinx-apidoc", "--separate", "--suffix", suffix, *args]
+    arguments = ["--separate", "--suffix", suffix, *args]
 
     # show help info if user passes help flag.
     # NOTE: sphinx-apidoc's cmdline parser allows long options to be
@@ -52,11 +55,11 @@ def feed_sphinx_apidoc(
     # but choose to trust the user.
     help_flags = ("-h", "--help")
     if any(flag in args for flag in help_flags):
-        stdout = None
+        stdout = sys.stdout
         is_help = True
     else:
         is_help = False
-        stdout = subprocess.DEVNULL
+        stdout = None
         _add_flag_if_not_present(
             arguments,
             implicit_namespaces,
@@ -73,7 +76,9 @@ def feed_sphinx_apidoc(
             arguments.remove("--dry-run")
 
     logger.debug("arguments: %s", arguments)
-    subprocess.check_call(arguments, stdout=stdout)
+    logger.debug("stdout: %s", stdout)
+    with redirect_stdout(stdout):
+        apidoc.main(arguments)
 
     return is_help
 
@@ -179,6 +184,7 @@ def rename_files(
     extension: str = "rst",
     implicit_namespaces: bool = False,
     dry_run: bool = False,
+    force: bool = False,
 ) -> None:
     """
     Renames the ``sphinx-apidoc`` generated files located in the source
@@ -194,6 +200,7 @@ def rename_files(
             Whether to treat ``package_dir`` as a package. If ``False``, any
             directory that does not contain ``__init__`` file will be ignored.
         dry_run: Runs but does not actually rename the files.
+        force: Whether to replace files if they already exist.
     """
     for source_file in yield_source_files(sphinx_source_dir, extension):
         nested_dir_path = get_destination_filename(
@@ -217,10 +224,9 @@ def rename_files(
         except FileExistsError:
             logger.debug("makedirs: %s already exists", dest_dir)
 
-        # replace the sphinx file with the new file.
-        try:
-            os.replace(source_file, dest_path)
-        except OSError:
-            logger.warning("replace: %s already exists", dest_path)
+        if path.exists(dest_path) and not force:
+            logger.warning("%s already exists. Skipping.", dest_path)
+            continue
 
+        os.replace(source_file, dest_path)
         logger.info("%s -> %s", source_file, dest_path)
