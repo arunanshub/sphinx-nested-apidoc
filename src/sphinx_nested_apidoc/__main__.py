@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import logging
-from subprocess import CalledProcessError
 
 from . import __version__, start_logging
 from .core import feed_sphinx_apidoc, rename_files
@@ -24,7 +23,7 @@ Visit <https://github.com/arunanshub/sphinx-nested-apidoc> for more info.
 """
 
 
-def main(argv: list[str] | None = None) -> None:
+def main(argv: list[str] | None = None) -> int:
     logging_levels = {
         3: logging.WARNING,
         4: logging.INFO,
@@ -114,31 +113,33 @@ def main(argv: list[str] | None = None) -> None:
             verbose = 5
         start_logging(logging_levels[verbose])
 
-    try:
-        is_help = feed_sphinx_apidoc(
-            "--output-dir",
-            args.destdir,
-            args.module_path,
-            *args.sphinx_commands,
-            implicit_namespaces=args.implicit_namespaces,
-            force=args.force,
-            suffix=args.suffix,
-        )
-    except CalledProcessError as e:
-        logger.debug("%s", str(e))
-        ps.exit(1)
+    is_help = feed_sphinx_apidoc(
+        "--output-dir",
+        args.destdir,
+        args.module_path,
+        *args.sphinx_commands,
+        implicit_namespaces=args.implicit_namespaces,
+        force=args.force,
+        suffix=args.suffix,
+    )
 
     if is_help:
         ps.exit(0)
 
-    rename_files(
-        args.destdir,
-        args.module_path,
-        implicit_namespaces=args.implicit_namespaces,
-        extension=args.suffix,
-        dry_run=args.dry_run,
-        force=args.force,
-    )
+    try:
+        rename_files(
+            args.destdir,
+            args.module_path,
+            implicit_namespaces=args.implicit_namespaces,
+            extension=args.suffix,
+            dry_run=args.dry_run,
+            force=args.force,
+        )
+    except ValueError as e:
+        logger.error("%s", e)
+        return 1
+
+    return 0
 
 
 if __name__ == "__main__":
