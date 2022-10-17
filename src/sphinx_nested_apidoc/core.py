@@ -24,6 +24,8 @@ def _add_flag_if_not_present(
 
 
 def feed_sphinx_apidoc(
+    output_dir: str,
+    module_path: str,
     *args: str,
     implicit_namespaces: bool = False,
     force: bool = False,
@@ -43,7 +45,15 @@ def feed_sphinx_apidoc(
         True if help flag is passed, otherwise False.
     """
     # `--separate` puts documentation for each module on its own page.
-    arguments = ["--separate", "--suffix", suffix, *args]
+    arguments = [
+        "--output-dir",
+        output_dir,
+        module_path,
+        "--separate",
+        "--suffix",
+        suffix,
+        *args,
+    ]
 
     # show help info if user passes help flag.
     # NOTE: sphinx-apidoc's cmdline parser allows long options to be
@@ -202,6 +212,12 @@ def rename_files(
         force: Whether to replace files if they already exist.
     """
     for source_file in yield_source_files(sphinx_source_dir, extension):
+        # ignore `index.rst` and `module.rst` files. `modules.rst` is
+        # generated when `sphinx-apidoc --full` is not used.
+        file_name = path.splitext(path.basename(source_file))[0]
+        if file_name in ("index", "modules"):
+            continue
+
         nested_dir_path = get_destination_filename(
             source_file,
             package_dir,
@@ -224,6 +240,7 @@ def rename_files(
             logger.debug("makedirs: %s already exists", dest_dir)
 
         if path.exists(dest_path) and not force:
+            os.remove(source_file)  # remove leftover source files.
             logger.warning("%s already exists. Skipping.", dest_path)
             continue
 
