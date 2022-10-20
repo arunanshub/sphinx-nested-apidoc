@@ -26,7 +26,7 @@ def _add_flag_if_not_present(
 def feed_sphinx_apidoc(
     output_dir: str,
     module_path: str,
-    *args: str,
+    *sphinx_arguments: str,
     implicit_namespaces: bool = False,
     force: bool = False,
     suffix: str = "rst",
@@ -52,7 +52,7 @@ def feed_sphinx_apidoc(
         "--separate",
         "--suffix",
         suffix,
-        *args,
+        *sphinx_arguments,
     ]
 
     # show help info if user passes help flag.
@@ -60,7 +60,7 @@ def feed_sphinx_apidoc(
     # abbreviated to a prefix. We can prevent it by using itertools.accumulate,
     # but choose to trust the user.
     help_flags = ("-h", "--help")
-    if any(flag in args for flag in help_flags):
+    if any(flag in sphinx_arguments for flag in help_flags):
         stdout = sys.stdout
         is_help = True
     else:
