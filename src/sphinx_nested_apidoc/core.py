@@ -6,7 +6,7 @@ import os
 import sys
 from contextlib import redirect_stdout
 from os import path
-from typing import Iterator
+from typing import Iterable, Iterator
 
 from sphinx.ext import apidoc
 
@@ -43,6 +43,10 @@ def feed_sphinx_apidoc(
 
     Returns:
         True if help flag is passed, otherwise False.
+
+    Caution:
+        ``sphinx-apidoc`` cannot handle situations where the supposed file in
+        the ``output_dir`` is actually a directory.
     """
     # `--separate` puts documentation for each module on its own page.
     arguments = [
@@ -112,7 +116,7 @@ def yield_source_files(
         path.normpath(source_dir),
         f"*{path.extsep}{extension}",
     )
-    yield from glob.iglob(pattern)
+    yield from filter(path.isfile, glob.iglob(pattern))
 
 
 def get_nested_dir_filename(sphinx_source_file: str) -> str:
@@ -194,6 +198,7 @@ def rename_files(
     implicit_namespaces: bool = False,
     dry_run: bool = False,
     force: bool = False,
+    excluded_files: Iterable[str] = ("index", "modules"),
 ) -> None:
     """
     Renames the ``sphinx-apidoc`` generated files located in the source
@@ -210,12 +215,18 @@ def rename_files(
             directory that does not contain ``__init__`` file will be ignored.
         dry_run: Runs but does not actually rename the files.
         force: Whether to replace files if they already exist.
+        excluded_files:
+            Name of files (**without extension**) that should not be
+            renamed/modified. By default, it excludes ``index`` and
+            ``modules``.
     """
     for source_file in yield_source_files(sphinx_source_dir, extension):
-        # ignore `index.rst` and `module.rst` files. `modules.rst` is
-        # generated when `sphinx-apidoc --full` is not used.
+        # ignore `index` and `modules` files by default. `modules` is generated
+        # when `sphinx-apidoc --full` is not used.
+        # file_name: /a/b/c/docs/index.ext => index.ext => index
         file_name = path.splitext(path.basename(source_file))[0]
-        if file_name in ("index", "modules"):
+        if file_name in excluded_files:
+            logger.debug("Skipping excluded file: %s", source_file)
             continue
 
         nested_dir_path = get_destination_filename(
