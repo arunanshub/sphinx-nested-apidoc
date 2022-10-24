@@ -114,7 +114,6 @@ def main(argv: list[str] | None = None) -> int:
         start_logging(logging_levels[verbose])
 
     is_help = feed_sphinx_apidoc(
-        "--output-dir",
         args.destdir,
         args.module_path,
         *args.sphinx_commands,
