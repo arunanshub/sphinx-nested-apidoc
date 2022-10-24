@@ -26,3 +26,8 @@ def start_logging(
     logger.debug("Logging enabled for %s", __name__)
 
     return handler
+
+
+from .ext import setup  # noqa: E402
+
+__all__ = ["setup"]
