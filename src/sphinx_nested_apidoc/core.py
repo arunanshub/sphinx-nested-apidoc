@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import glob
 import logging
 import os
@@ -142,8 +143,12 @@ def get_nested_dir_filename(sphinx_source_file: str) -> str:
     return src_filename.replace(".", path.sep) + ext
 
 
+@functools.lru_cache
 def is_packagedir(directory: str) -> bool:
-    """Checks if given directory is a package."""
+    """Checks if given directory is a package.
+
+    This function caches its input to improve performance.
+    """
     return any("__init__" in name for name in os.listdir(directory))
 
 
