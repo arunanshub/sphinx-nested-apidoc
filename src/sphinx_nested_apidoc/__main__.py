@@ -135,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
             force=args.force,
         )
     except ValueError as e:
-        logger.error("%s", e)
+        logger.error("%s", e, exc_info=True)
         return 1
 
     return 0
