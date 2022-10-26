@@ -15,17 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 @functools.lru_cache
-def _sanitize_path(p: str) -> str:
-    """
-    Eliminates double slashes and relative path nastiness from the given path
-    by treating them as relative to root path.
-
-    This function caches its arguments.
-    """
-    return path.relpath(path.join(path.sep, p), "/").strip(path.curdir)
-
-
-@functools.lru_cache
 def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
     """
     The same ``os.makedirs``, except that it caches its arguments and returns
@@ -54,6 +43,32 @@ def _add_flag_if_not_present(
 ) -> None:
     if cond and (flag not in arg or short_flag not in arg):
         arg.append(flag)
+
+
+def sanitize_path(p: str) -> str:
+    """
+    Eliminates double slashes and relative path nastiness from the given path
+    by treating them as relative to root path.
+
+    Args:
+        p: A string representing the path to be sanitized.
+
+    Returns:
+        Sanitized path as string.
+
+    Note:
+        On Windows, if the path contains a different drive letter, it will
+        return an empty string.
+    """
+    try:
+        return path.relpath(
+            path.join(path.sep, p),
+            path.sep,
+        ).strip(path.curdir)
+    except ValueError:
+        # Windows issue: given path is a different drive. Since it is invalid
+        # anyway, we return empty string.
+        return ""
 
 
 def feed_sphinx_apidoc(
@@ -207,8 +222,7 @@ def get_destination_filename(
             New name for the destination directory. For example, it renames
             ``myproj/a/b/c.rst`` to ``newname/a/b/c.rst``, where ``newname`` is
             the new name of the directory. If ``None``, name of the package is
-            used. Note: **value in the form of relative path is sanitized as
-            path relative to root.**
+            used.
 
     Returns:
         A string representing the path of the file.
@@ -236,7 +250,7 @@ def get_destination_filename(
     # "a/b/c/d.rst" => "renamed/b/c/d.rst"
     if rename_destdir_to is not None:
         dest_name = path.join(
-            _sanitize_path(rename_destdir_to),
+            rename_destdir_to,
             dest_name.split(path.sep, 1)[-1],
         )
     return dest_name
@@ -265,8 +279,7 @@ def rename_files(
             New name for the destination directory. For example, it renames
             ``myproj/a/b/c.rst`` to ``newname/a/b/c.rst``, where ``newname`` is
             the new name of the directory. If ``None``, name of the package is
-            used. Note: **value in the form of relative path is sanitized as
-            path relative to root.**
+            used.
         extension: The extension of the ``sphinx-apidoc`` generated file.
         implicit_namespaces:
             Whether to treat ``package_dir`` as a package. If ``False``, any
