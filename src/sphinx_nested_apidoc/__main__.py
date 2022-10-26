@@ -42,9 +42,8 @@ def main(argv: list[str] | None = None) -> int:
         action="count",
         default=3,
         help="Increase application verbosity."
-        " This option is repeatable and will increase verbosity each time "
-        "it is repeated."
-        " This option cannot be used when -q/--quiet is used.",
+        " This option is repeatable and will increase verbosity each time it"
+        " is repeated. This option cannot be used when -q/--quiet is used.",
     )
     group.add_argument(
         "-q",
@@ -82,6 +81,13 @@ def main(argv: list[str] | None = None) -> int:
         required=True,
         type=str,
         help="directory to place all output",
+    )
+    ps.add_argument(
+        "-r",
+        "--rename-destdir-to",
+        type=str,
+        help="New name of the generated directory for the package that resides"
+        " within the output directory",
     )
 
     # sphinx-apidoc specific options
@@ -129,8 +135,9 @@ def main(argv: list[str] | None = None) -> int:
         rename_files(
             args.destdir,
             args.module_path,
-            implicit_namespaces=args.implicit_namespaces,
+            rename_destdir_to=args.rename_destdir_to,
             extension=args.suffix,
+            implicit_namespaces=args.implicit_namespaces,
             dry_run=args.dry_run,
             force=args.force,
         )
