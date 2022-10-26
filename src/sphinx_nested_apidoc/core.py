@@ -14,6 +14,28 @@ from sphinx.ext import apidoc
 logger = logging.getLogger(__name__)
 
 
+@functools.lru_cache
+def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
+    """
+    The same ``os.makedirs``, except that it caches its arguments and returns
+    boolean instead of raising an exception.
+
+    Args:
+        name: The name of the directory to create.
+        mode: The creation mode.
+
+    Returns:
+        ``True`` if directory is created, ``False`` otherwise.
+    """
+    logger.warning("Hit: %s", name)
+    try:
+        os.makedirs(name, mode, exist_ok=False)
+    except FileExistsError:
+        return False
+
+    return True
+
+
 def _add_flag_if_not_present(
     arg: list[str],
     cond: bool,
@@ -250,9 +272,7 @@ def rename_files(
         # create the directories.
         # NOTE: We can create the directories beforehand by filtering out the
         # dirs from the destination filename.
-        try:
-            os.makedirs(dest_dir, exist_ok=False, mode=0o755)
-        except FileExistsError:
+        if not _safe_makedirs(dest_dir, mode=0o755):
             logger.debug("makedirs: %s already exists", dest_dir)
 
         if path.exists(dest_path) and not force:
