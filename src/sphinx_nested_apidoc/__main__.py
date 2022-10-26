@@ -4,7 +4,7 @@ import argparse
 import logging
 
 from . import __version__, start_logging
-from .core import feed_sphinx_apidoc, rename_files
+from .core import feed_sphinx_apidoc, rename_files, sanitize_path
 
 logger = logging.getLogger(__name__)
 
@@ -135,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
         rename_files(
             args.destdir,
             args.module_path,
-            rename_destdir_to=args.rename_destdir_to,
+            rename_destdir_to=sanitize_path(args.rename_destdir_to),
             extension=args.suffix,
             implicit_namespaces=args.implicit_namespaces,
             dry_run=args.dry_run,
