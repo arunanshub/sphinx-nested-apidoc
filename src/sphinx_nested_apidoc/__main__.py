@@ -135,7 +135,11 @@ def main(argv: list[str] | None = None) -> int:
         rename_files(
             args.destdir,
             args.module_path,
-            rename_destdir_to=sanitize_path(args.rename_destdir_to),
+            rename_destdir_to=(
+                sanitize_path(args.rename_destdir_to)
+                if args.rename_destdir_to is not None
+                else None
+            ),
             extension=args.suffix,
             implicit_namespaces=args.implicit_namespaces,
             dry_run=args.dry_run,
