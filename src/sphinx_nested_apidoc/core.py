@@ -27,7 +27,6 @@ def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
     Returns:
         ``True`` if directory is created, ``False`` otherwise.
     """
-    logger.warning("Hit: %s", name)
     try:
         os.makedirs(name, mode, exist_ok=False)
     except FileExistsError:
