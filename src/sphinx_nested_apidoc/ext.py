@@ -6,12 +6,13 @@ if typing.TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 from . import __version__
-from .core import feed_sphinx_apidoc, rename_files
+from .core import feed_sphinx_apidoc, rename_files, sanitize_path
 
 
 def _execute(
     package_dir: str,
     doc_dir: str,
+    rename_destdir_to: str | None,
     suffix: str,
     excluded_files: typing.Iterable[str],
     module_first: bool,
@@ -33,9 +34,14 @@ def _execute(
     rename_files(
         doc_dir,
         package_dir,
+        (
+            sanitize_path(rename_destdir_to)
+            if rename_destdir_to is not None
+            else None
+        ),
         suffix,
-        excluded_files=excluded_files,
         implicit_namespaces=implicit_namespaces,
+        excluded_files=excluded_files,
     )
 
 
@@ -43,6 +49,7 @@ def _builder_inited(app: Sphinx) -> None:
     config = app.config
     package_dir = config.sphinx_nested_apidoc_package_dir
     docdir = config.sphinx_nested_apidoc_srcdir
+    rename_destdir_to = config.sphinx_nested_apidoc_rename_destdir_to
     suffix = config.sphinx_nested_apidoc_suffix
     excluded_files = config.sphinx_nested_apidoc_excluded_files
     module_first = config.sphinx_nested_apidoc_module_first
@@ -50,6 +57,7 @@ def _builder_inited(app: Sphinx) -> None:
     _execute(
         package_dir,
         docdir,
+        rename_destdir_to,
         suffix,
         excluded_files,
         module_first,
@@ -112,6 +120,15 @@ def setup(app: Sphinx) -> dict[str, str | bool]:
         False,
         rebuild_cond,
         [bool],
+    )
+    # New name for the destination directory. For example, it renames
+    # `myproj/a/b/c.rst` to `newname/a/b/c.rst`, where `newname` is the new
+    # name of the directory. If `None`, name of the package is used.
+    app.add_config_value(
+        "sphinx_nested_apidoc_rename_destdir_to",
+        None,
+        rebuild_cond,
+        [str],
     )
 
     return {"version": __version__, "parallel_read_safe": True}
