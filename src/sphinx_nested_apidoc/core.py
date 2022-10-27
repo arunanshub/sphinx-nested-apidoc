@@ -61,14 +61,13 @@ def sanitize_path(p: str) -> str:
         return an empty string.
     """
     try:
-        return path.relpath(
-            path.join(path.sep, p),
-            path.sep,
-        ).strip(path.curdir)
+        sanitized = path.relpath(path.join(path.sep, p), path.sep)
     except ValueError:
         # Windows issue: given path is a different drive. Since it is invalid
         # anyway, we return empty string.
         return ""
+
+    return "" if sanitized == "." else sanitized
 
 
 def feed_sphinx_apidoc(
@@ -204,11 +203,11 @@ def get_destination_filename(
     package_dir: str,
     extension: str = "rst",
     implicit_namespaces: bool = False,
-    rename_destdir_to: str | None = None,
+    package_name: str | None = None,
 ) -> str:
     """
     Convert a ``sphinx-apidoc`` generated source file name into a nested
-    directory based path, and insert "index" files where necessary.
+    directory based path, and rename to "index" files where necessary.
 
     Args:
         sphinx_source_file: Path to the ``sphinx-apidoc`` generated file.
@@ -218,11 +217,13 @@ def get_destination_filename(
         implicit_namespaces:
             Whether to treat ``package_dir`` as a package. If ``False``, any
             directory that does not contain ``__init__`` file will be ignored.
-        rename_destdir_to:
-            New name for the destination directory. For example, it renames
-            ``myproj/a/b/c.rst`` to ``newname/a/b/c.rst``, where ``newname`` is
-            the new name of the directory. If ``None``, name of the package is
-            used.
+        package_name:
+            Name of the package directory that hosts the generated
+            documentation files. This usually resides in the documentation
+            directory. For example, it renames ``docs/myproj/a/b/c.rst`` to
+            ``docs/newname/a/b/c.rst``, where ``newname`` is the new name of
+            the directory. If ``None``, the name is derived from
+            ``package_dir`` and sphinx source file.
 
     Returns:
         A string representing the path of the file.
@@ -247,19 +248,16 @@ def get_destination_filename(
             f"index{path.extsep}{extension}",
         )
 
-    # "a/b/c/d.rst" => "renamed/b/c/d.rst"
-    if rename_destdir_to is not None:
-        dest_name = path.join(
-            rename_destdir_to,
-            dest_name.split(path.sep, 1)[-1],
-        )
+    # "docs/package/b/c/d.rst" => "docs/renamed/b/c/d.rst"
+    if package_name is not None:
+        dest_name = path.join(package_name, dest_name.split(path.sep, 1)[-1])
     return dest_name
 
 
 def rename_files(
     sphinx_source_dir: str,
     package_dir: str,
-    rename_destdir_to: str | None = None,
+    package_name: str | None = None,
     extension: str = "rst",
     implicit_namespaces: bool = False,
     dry_run: bool = False,
@@ -275,11 +273,13 @@ def rename_files(
             Path where the ``sphinx-apidoc`` generated files are located.
         package_dir:
             The directory to compare ``sphinx-apidoc`` generated file against.
-        rename_destdir_to:
-            New name for the destination directory. For example, it renames
-            ``myproj/a/b/c.rst`` to ``newname/a/b/c.rst``, where ``newname`` is
-            the new name of the directory. If ``None``, name of the package is
-            used.
+        package_name:
+            Name of the package directory that hosts the generated
+            documentation files. This usually resides in the documentation
+            directory. For example, it renames ``docs/myproj/a/b/c.rst`` to
+            ``docs/newname/a/b/c.rst``, where ``newname`` is the new name of
+            the directory. If ``None``, the name is derived from
+            ``package_dir`` and sphinx source file.
         extension: The extension of the ``sphinx-apidoc`` generated file.
         implicit_namespaces:
             Whether to treat ``package_dir`` as a package. If ``False``, any
@@ -305,7 +305,7 @@ def rename_files(
             package_dir,
             extension,
             implicit_namespaces,
-            rename_destdir_to,
+            package_name,
         )
         dest_path = path.join(sphinx_source_dir, nested_dir_path)
         dest_dir = path.split(dest_path)[0]
