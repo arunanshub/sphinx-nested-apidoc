@@ -32,6 +32,7 @@ def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
     except FileExistsError:
         return False
 
+    logger.debug("Create directory %s", name)
     return True
 
 
