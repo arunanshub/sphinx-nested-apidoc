@@ -12,7 +12,7 @@ from .core import feed_sphinx_apidoc, rename_files, sanitize_path
 def _execute(
     package_dir: str,
     doc_dir: str,
-    rename_destdir_to: str | None,
+    package_name: str | None,
     suffix: str,
     excluded_files: typing.Iterable[str],
     module_first: bool,
@@ -34,11 +34,7 @@ def _execute(
     rename_files(
         doc_dir,
         package_dir,
-        (
-            sanitize_path(rename_destdir_to)
-            if rename_destdir_to is not None
-            else None
-        ),
+        (sanitize_path(package_name) if package_name is not None else None),
         suffix,
         implicit_namespaces=implicit_namespaces,
         excluded_files=excluded_files,
@@ -47,9 +43,9 @@ def _execute(
 
 def _builder_inited(app: Sphinx) -> None:
     config = app.config
+    docdir = app.srcdir
     package_dir = config.sphinx_nested_apidoc_package_dir
-    docdir = config.sphinx_nested_apidoc_srcdir
-    rename_destdir_to = config.sphinx_nested_apidoc_rename_destdir_to
+    package_name = config.sphinx_nested_apidoc_package_name
     suffix = config.sphinx_nested_apidoc_suffix
     excluded_files = config.sphinx_nested_apidoc_excluded_files
     module_first = config.sphinx_nested_apidoc_module_first
@@ -57,7 +53,7 @@ def _builder_inited(app: Sphinx) -> None:
     _execute(
         package_dir,
         docdir,
-        rename_destdir_to,
+        package_name,
         suffix,
         excluded_files,
         module_first,
@@ -68,29 +64,23 @@ def _builder_inited(app: Sphinx) -> None:
 def setup(app: Sphinx) -> dict[str, str | bool]:
     rebuild_cond = "env"
     app.connect("builder-inited", _builder_inited)
-    # package_dir is where our package to be documented resides.
+    # package_dir is where our package to document resides.
     app.add_config_value(
         "sphinx_nested_apidoc_package_dir",
         None,
         rebuild_cond,
         [str],
     )
-    # srcdir is where the sphinx source files reside. These files are used to
-    # generate documentation. Also, these files are generated from the files in
-    # package_dir.
+    # Name of the package directory that hosts the generated documentation
+    # files. This usually resides in the documentation directory. For example,
+    # it renames ``docs/myproj/a/b/c.rst`` to ``docs/newname/a/b/c.rst``,
+    # where ``newname`` is the new name of the directory. If ``None``, the
+    # name is be derived from ``package_dir`` and sphinx source file.
     app.add_config_value(
-        "sphinx_nested_apidoc_srcdir",
-        app.srcdir,
+        "sphinx_nested_apidoc_package_name",
+        None,
         rebuild_cond,
-        [str],
-    )
-    # outdir is where the nested dir files reside. By default, they are kept in
-    # ``srcdir`` itself.
-    app.add_config_value(
-        "sphinx_nested_apidoc_outdir",
-        app.srcdir,
-        rebuild_cond,
-        [str],
+        [str, None],
     )
     # The suffix of the generated documentation files.
     app.add_config_value(
@@ -120,15 +110,6 @@ def setup(app: Sphinx) -> dict[str, str | bool]:
         False,
         rebuild_cond,
         [bool],
-    )
-    # New name for the destination directory. For example, it renames
-    # `myproj/a/b/c.rst` to `newname/a/b/c.rst`, where `newname` is the new
-    # name of the directory. If `None`, name of the package is used.
-    app.add_config_value(
-        "sphinx_nested_apidoc_rename_destdir_to",
-        None,
-        rebuild_cond,
-        [str],
     )
 
     return {"version": __version__, "parallel_read_safe": True}
