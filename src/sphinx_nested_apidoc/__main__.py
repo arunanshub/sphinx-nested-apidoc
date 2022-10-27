@@ -85,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
     ps.add_argument(
         "--package-name",
         type=str,
-        help="Name of the folder to put all the package documentation in."
+        help="Name of the directory to put the package documentation in."
         " By default it is the name of the package itself.",
     )
 
