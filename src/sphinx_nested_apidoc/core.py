@@ -218,12 +218,11 @@ def get_destination_filename(
             Whether to treat ``package_dir`` as a package. If ``False``, any
             directory that does not contain ``__init__`` file will be ignored.
         package_name:
-            Name of the package directory that hosts the generated
-            documentation files. This usually resides in the documentation
-            directory. For example, it renames ``docs/myproj/a/b/c.rst`` to
-            ``docs/newname/a/b/c.rst``, where ``newname`` is the new name of
-            the directory. If ``None``, the name is derived from
-            ``package_dir`` and sphinx source file.
+            Name of the directory to put all the package documentation in. This
+            resides in the documentation directory. For example, it renames
+            ``docs/myproj/a/b/c.rst`` to ``docs/newname/a/b/c.rst``, where
+            ``newname`` is the new name of the directory. If ``None``, the name
+            is derived from ``package_dir`` and sphinx source file.
 
     Returns:
         A string representing the path of the file.
@@ -274,12 +273,11 @@ def rename_files(
         package_dir:
             The directory to compare ``sphinx-apidoc`` generated file against.
         package_name:
-            Name of the package directory that hosts the generated
-            documentation files. This usually resides in the documentation
-            directory. For example, it renames ``docs/myproj/a/b/c.rst`` to
-            ``docs/newname/a/b/c.rst``, where ``newname`` is the new name of
-            the directory. If ``None``, the name is derived from
-            ``package_dir`` and sphinx source file.
+            Name of the directory to put all the package documentation in. This
+            resides in the documentation directory. For example, it renames
+            ``docs/myproj/a/b/c.rst`` to ``docs/newname/a/b/c.rst``, where
+            ``newname`` is the new name of the directory. If ``None``, the name
+            is derived from ``package_dir`` and sphinx source file.
         extension: The extension of the ``sphinx-apidoc`` generated file.
         implicit_namespaces:
             Whether to treat ``package_dir`` as a package. If ``False``, any

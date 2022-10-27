@@ -71,11 +71,11 @@ def setup(app: Sphinx) -> dict[str, str | bool]:
         rebuild_cond,
         [str],
     )
-    # Name of the package directory that hosts the generated documentation
-    # files. This usually resides in the documentation directory. For example,
-    # it renames ``docs/myproj/a/b/c.rst`` to ``docs/newname/a/b/c.rst``,
-    # where ``newname`` is the new name of the directory. If ``None``, the
-    # name is be derived from ``package_dir`` and sphinx source file.
+    # Name of the package directory to put all the package documentation in.
+    # This resides in the documentation directory. For example, it renames
+    # ``docs/myproj/a/b/c.rst`` to ``docs/newname/a/b/c.rst``, where
+    # ``newname`` is the new name of the directory. If ``None``, the name is
+    # derived from ``package_dir`` and sphinx source file.
     app.add_config_value(
         "sphinx_nested_apidoc_package_name",
         None,

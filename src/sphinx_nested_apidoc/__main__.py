@@ -85,9 +85,8 @@ def main(argv: list[str] | None = None) -> int:
     ps.add_argument(
         "--package-name",
         type=str,
-        help="Name of the package directory that hosts the generated"
-        " documentation files. This usually resides in the documentation"
-        " directory.",
+        help="Name of the folder to put all the package documentation in."
+        " By default it is the name of the package itself.",
     )
 
     # sphinx-apidoc specific options
