@@ -1,3 +1,36 @@
+## v1.2.0 (2022-10-28)
+
+### Feat
+
+- **ext**: add `rename_destdir_to` as extension argument
+- **main**: add CLI flag to specify the name of directory in output dir
+- **core**: allow renaming of generated package directory
+- export `setup` function for `sphinx`
+- **ext**: allow `sphinx-nested-apidoc` to be used as a sphinx extension
+- **core**: allow caller to specify excluded files and check if given path is a file
+- **core**: clean up leftover files if files are not renamed
+
+### Fix
+
+- **ext**: remove unused and redundant configuration values
+- **core**: handle santization of names when name is like `.name`
+- **main**: check if `rename_destdir_to` is None
+- **main**: remove erroneous `--output-dir` flag
+
+### Refactor
+
+- **core**: log when creating directory
+- **main**: rename cli argument to `--package-name`
+- **core**: make `sanitize_path` a public function and remove unnecessary caching
+- **main**: display complete Exception info on failure
+- **core**: rename `args` to `sphinx_arguments`
+
+### Perf
+
+- **main**: sanitize argument beforehand to avoid unnecessary caching
+- **core**: prevent repeated calls to `os.makedirs`
+- **core**: cache the argument of `is_packagedir`
+
 ## v1.1.1 (2022-10-12)
 
 ### Fix
