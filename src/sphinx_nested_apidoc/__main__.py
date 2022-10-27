@@ -83,11 +83,11 @@ def main(argv: list[str] | None = None) -> int:
         help="directory to place all output",
     )
     ps.add_argument(
-        "-r",
-        "--rename-destdir-to",
+        "--package-name",
         type=str,
-        help="New name of the generated directory for the package that resides"
-        " within the output directory",
+        help="Name of the package directory that hosts the generated"
+        " documentation files. This usually resides in the documentation"
+        " directory.",
     )
 
     # sphinx-apidoc specific options
@@ -135,9 +135,9 @@ def main(argv: list[str] | None = None) -> int:
         rename_files(
             args.destdir,
             args.module_path,
-            rename_destdir_to=(
-                sanitize_path(args.rename_destdir_to)
-                if args.rename_destdir_to is not None
+            package_name=(
+                sanitize_path(args.package_name)
+                if args.package_name is not None
                 else None
             ),
             extension=args.suffix,
