@@ -1,6 +1,8 @@
 sphinx-nested-apidoc
 ====================
 
+When flattened is not enough.
+
 .. image:: https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml/badge.svg
    :alt: CI
    :target: https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml
@@ -20,8 +22,6 @@ sphinx-nested-apidoc
 .. image:: https://readthedocs.org/projects/sphinx-nested-apidoc/badge/?version=latest
     :target: https://sphinx-nested-apidoc.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
-
-When flattened is not enough.
 
 Installation
 ++++++++++++
