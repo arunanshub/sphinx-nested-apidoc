@@ -214,6 +214,9 @@ extended configuration.
 positional arguments:
    ``module_path``
       Path to package to document.
+   ``...``
+      Commands and flags to supply to sphinx-apidoc. Note that some arguments
+      like `--dry-run` are ignored.
 
 options:
    -h, --help
