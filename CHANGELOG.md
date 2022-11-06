@@ -1,3 +1,9 @@
+## v1.2.1 (2022-11-06)
+
+### Refactor
+
+- **ext**: make `ext` an internal module
+
 ## v1.2.0 (2022-10-28)
 
 ### Feat
