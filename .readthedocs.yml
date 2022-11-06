@@ -9,6 +9,8 @@ build:
       - curl -sSL https://install.python-poetry.org | python3 -
       - $HOME/.local/bin/poetry config virtualenvs.create false
       - $HOME/.local/bin/poetry install
+      - pip list
+      - $HOME/.local/bin/poetry show -t
 
 sphinx:
   configuration: docs/conf.py
