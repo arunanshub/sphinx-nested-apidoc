@@ -143,7 +143,6 @@ Want to name the package something else?
 It generates:
 
 .. code-block:: text
-   :emphasize-lines: 3
 
    docs/
    ├── modules.rst
@@ -163,6 +162,8 @@ It generates:
        │   ├── pear.rst
        │   └── index.rst
        └── index.rst
+
+Note that ``sphinx_nested_apidoc`` has been renamed to ``src``.
 
 As a Sphinx Extension
 ---------------------
