@@ -22,6 +22,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
+    "sphinxext.opengraph",
 ]
 
 templates_path = ["_templates"]
@@ -43,6 +44,9 @@ autodoc_typehints_format = "short"
 
 # map to python builtins
 intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
+
+# opengraph support
+ogp_site_url = "https://sphinx-nested-apidoc.readthedocs.io"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

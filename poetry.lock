@@ -586,6 +586,17 @@ lint = ["docutils-stubs", "flake8", "mypy"]
 test = ["pytest"]
 
 [[package]]
+name = "sphinxext-opengraph"
+version = "0.7.2"
+description = "Sphinx Extension to enable OGP support"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+sphinx = ">=4.0"
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -646,7 +657,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b995d3c233936141f060a9cc863772f40f5f3617551a6eaeb3286a86c33f7c1e"
+content-hash = "d7948d2d69e876ac9a8e0420a1c0be32d76eda17849fd2c3039e931eb86e488c"
 
 [metadata.files]
 alabaster = [
@@ -964,6 +975,10 @@ sphinxcontrib-qthelp = [
 sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib-serializinghtml-1.1.5.tar.gz", hash = "sha256:aa5f6de5dfdf809ef505c4895e51ef5c9eac17d0f287933eb49ec495280b6952"},
     {file = "sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl", hash = "sha256:352a9a00ae864471d3a7ead8d7d79f5fc0b57e8b3f95e9867eb9eb28999b92fd"},
+]
+sphinxext-opengraph = [
+    {file = "sphinxext-opengraph-0.7.2.tar.gz", hash = "sha256:85230ee14d50c97d9db457d4dc4c9f9ea08bc78e7dd6850d615e05705e5c2977"},
+    {file = "sphinxext_opengraph-0.7.2-py3-none-any.whl", hash = "sha256:7a33e13a1e1d6afa66744c24d1f5aabdde77ba70018403f9137a2d8dbe958c24"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},

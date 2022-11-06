@@ -37,6 +37,7 @@ pytest-cov = "^4.0.0"
 
 [tool.poetry.group.docs.dependencies]
 furo = ">=2022.9.29"
+sphinxext-opengraph = "^0.7.2"
 
 [build-system]
 requires = ["poetry-core"]
