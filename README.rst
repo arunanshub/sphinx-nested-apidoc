@@ -17,6 +17,10 @@ sphinx-nested-apidoc
    :target: https://pypi.org/project/sphinx-nested-apidoc
    :alt: PyPI - Python Version
 
+.. image:: https://readthedocs.org/projects/sphinx-nested-apidoc/badge/?version=latest
+    :target: https://sphinx-nested-apidoc.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 When flattened is not enough.
 
 Installation
