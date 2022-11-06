@@ -7,13 +7,15 @@ sphinx-nested-apidoc
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :alt: Black
+   :target: https://github.com/psf/black
 
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
    :alt: isort
+   :target: https://pycqa.github.io/isort
 
 .. image:: https://img.shields.io/pypi/pyversions/sphinx-nested-apidoc
-   :alt: Python Versions
    :target: https://pypi.org/project/sphinx-nested-apidoc
+   :alt: PyPI - Python Version
 
 When flattened is not enough.
 
