@@ -227,22 +227,18 @@ options:
       Replace existing files. (default: False)
    -n, --dry-run
       Run the script without creating files (default: False)
-   -o DESTDIR, --output-dir DESTDIR
+   -o, --output-dir
       directory to place all output (default: None)
-   --package-name PACKAGE_NAME
+   --package-name
       Name of the directory to put the package documentation in. By default it
       is the name of the package itself. (default: None)
 
 ``sphinx-apidoc`` options:
-   -s SUFFIX, --suffix SUFFIX
+   -s, --suffix
       file suffix (default: rst)
    --implicit-namespaces
       interpret module paths according to PEP-0420 implicit namespaces
       specification (default: False)
-
-   ``...``
-      Commands and flags to supply to sphinx-apidoc. Note
-      that some arguments like `--dry-run` are ignored.
 
 Sphinx Extension Configuration
 ++++++++++++++++++++++++++++++
