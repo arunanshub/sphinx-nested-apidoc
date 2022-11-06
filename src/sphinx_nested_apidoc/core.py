@@ -82,7 +82,15 @@ def feed_sphinx_apidoc(
     """Pass commands and flags to ``sphinx-apidoc``.
 
     Arguments:
-        args: The flags and command to pass to ``sphinx-apidoc``.
+        output_dir:
+            Directory where ``sphinx-apidoc`` should store its generated files.
+        module_path:
+            The path to the package that is being documented. Note that it is
+            more appropriate to call it ``package_path`` but we are following
+            ``sphinx-apidoc``'s conventions here.
+        sphinx_arguments: The flags and command to pass to ``sphinx-apidoc``.
+
+    Keyword arguments:
         implicit_namespaces:
             Interpret module paths according to PEP-0420 implicit namespaces
             specification.
