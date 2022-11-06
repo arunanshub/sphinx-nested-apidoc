@@ -10,6 +10,7 @@ build:
       - $HOME/.local/bin/poetry config virtualenvs.create false
       - $HOME/.local/bin/poetry install
       - pip list
+      - echo $VIRTUAL_ENV
       - $HOME/.local/bin/poetry show -t
 
 sphinx:
