@@ -4,7 +4,12 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 from __future__ import annotations
 
+import sys
 from datetime import date
+
+sys.path.insert(0, "..")
+
+import sphinx_nested_apidoc
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -12,6 +17,7 @@ from datetime import date
 project = "sphinx-nested-apidoc"
 author = "Arunanshu Biswas"
 copyright = f"2021-{date.today().year}, {author}"
+release = sphinx_nested_apidoc.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -23,6 +29,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
     "sphinxext.opengraph",
+    "sphinx_copybutton",
 ]
 
 templates_path = ["_templates"]
