@@ -167,7 +167,7 @@ It generates:
        │   └── index.rst
        └── index.rst
 
-Note that ``sphinx_nested_apidoc`` has been renamed to ``src``.
+Note that ``mymodule`` has been renamed to ``src``.
 
 As a Sphinx Extension
 ---------------------
