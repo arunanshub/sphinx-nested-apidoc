@@ -189,6 +189,17 @@ redis = ["redis (>=3.0.0)"]
 zoneinfo = ["backports.zoneinfo (>=0.2.1)", "tzdata (>=2022.5)"]
 
 [[package]]
+name = "hypothesis-fspaths"
+version = "0.1"
+description = "Hypothesis extension for generating filesystem paths"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+hypothesis = "*"
+
+[[package]]
 name = "identify"
 version = "2.5.8"
 description = "File identification library for Python"
@@ -672,7 +683,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5df4c52344fd4fb8f7fe2c4de58347afc57c0fc2827296ae318b5e06945f1013"
+content-hash = "f2701e0661c5f20620f2cae58f84fc48b26d5e147c7798ce92f4a143c3b46c37"
 
 [metadata.files]
 alabaster = [
@@ -786,6 +797,9 @@ furo = [
 hypothesis = [
     {file = "hypothesis-6.56.4-py3-none-any.whl", hash = "sha256:67950103ee930c66673494b3671474a083ea71f1ebe8f0ff849ba8ad5317772d"},
     {file = "hypothesis-6.56.4.tar.gz", hash = "sha256:313bc1c0f377ec6c98815d3237a69add7558eadee4effe4ed613d0ba36513a52"},
+]
+hypothesis-fspaths = [
+    {file = "hypothesis-fspaths-0.1.tar.gz", hash = "sha256:d1124ddc2a37cb54cdaa573bb16a40841a37598c8fc7b83dd07babffc6b01368"},
 ]
 identify = [
     {file = "identify-2.5.8-py2.py3-none-any.whl", hash = "sha256:48b7925fe122720088aeb7a6c34f17b27e706b72c61070f27fe3789094233440"},
