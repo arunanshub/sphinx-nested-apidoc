@@ -66,6 +66,15 @@ jobs:
         run: poetry install --no-interaction
 
       # TODO: add testing steps
+      - name: Test with Pytest
+        run: poetry run pytest -n auto -d --cov=src/ --cov-report=xml --cov-branch
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          verbose: true
+          files: ./coverage.xml
+          fail_ci_if_error: true
 
   publish:
     needs: [build]
