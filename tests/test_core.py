@@ -11,7 +11,7 @@ from . import dotted_filenames
 
 
 @given(path=fspaths())
-def test_file_path(path: str):
+def test_sanitize_path(path: str):
     sanitized_path = core.sanitize_path(os.fsdecode(path))
     assert not os.path.isabs(sanitized_path)
 
