@@ -7,6 +7,10 @@ When flattened is not enough.
    :alt: CI
    :target: https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml
 
+.. image:: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc/branch/master/graph/badge.svg?token=8VHvtix0FR
+   :target: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc
+   :alt: Coverage
+
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :alt: Black
    :target: https://github.com/psf/black
@@ -20,8 +24,8 @@ When flattened is not enough.
    :alt: PyPI - Python Version
 
 .. image:: https://readthedocs.org/projects/sphinx-nested-apidoc/badge/?version=latest
-    :target: https://sphinx-nested-apidoc.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
+   :target: https://sphinx-nested-apidoc.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Installation
 ++++++++++++
