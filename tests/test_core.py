@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import pathlib
 
 from hypothesis import given
 from hypothesis_fspaths import fspaths
@@ -29,15 +28,11 @@ def test_get_nested_dir_filename(filename: str):
 
 
 class TestFeedSphinxApidocFunc:
-    def test_help_in_argument(
-        self,
-        mocker: MockerFixture,
-        tmp_path: pathlib.Path,
-    ):
+    def test_help_in_argument(self, mocker: MockerFixture):
         apidoc_main = mocker.patch("sphinx_nested_apidoc.core.apidoc.main")
 
-        output_dir = os.fspath(tmp_path / "output")
-        module_path = os.fspath(tmp_path / "module")
+        output_dir = "output"
+        module_path = "module"
 
         for arg in "-h", "--help":
             core.feed_sphinx_apidoc(output_dir, module_path, arg)
@@ -53,15 +48,11 @@ class TestFeedSphinxApidocFunc:
                 ]
             )
 
-    def test_implicit_namespaces_argument(
-        self,
-        mocker: MockerFixture,
-        tmp_path: pathlib.Path,
-    ):
+    def test_implicit_namespaces_argument(self, mocker: MockerFixture):
         apidoc_main = mocker.patch("sphinx_nested_apidoc.core.apidoc.main")
 
-        output_dir = os.fspath(tmp_path / "output")
-        module_path = os.fspath(tmp_path / "module")
+        output_dir = "output"
+        module_path = "module"
 
         core.feed_sphinx_apidoc(
             output_dir,
@@ -80,15 +71,11 @@ class TestFeedSphinxApidocFunc:
             ]
         )
 
-    def test_force_argument(
-        self,
-        mocker: MockerFixture,
-        tmp_path: pathlib.Path,
-    ):
+    def test_force_argument(self, mocker: MockerFixture):
         apidoc_main = mocker.patch("sphinx_nested_apidoc.core.apidoc.main")
 
-        output_dir = os.fspath(tmp_path / "output")
-        module_path = os.fspath(tmp_path / "module")
+        output_dir = "output"
+        module_path = "module"
 
         core.feed_sphinx_apidoc(
             output_dir,
@@ -107,15 +94,11 @@ class TestFeedSphinxApidocFunc:
             ]
         )
 
-    def test_dry_run_flag_removed(
-        self,
-        mocker: MockerFixture,
-        tmp_path: pathlib.Path,
-    ):
+    def test_dry_run_flag_removed(self, mocker: MockerFixture):
         apidoc_main = mocker.patch("sphinx_nested_apidoc.core.apidoc.main")
 
-        output_dir = os.fspath(tmp_path / "output")
-        module_path = os.fspath(tmp_path / "module")
+        output_dir = "output"
+        module_path = "module"
 
         for arg in "-n", "--dry-run":
             core.feed_sphinx_apidoc(output_dir, module_path, arg)
