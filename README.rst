@@ -7,6 +7,9 @@ When flattened is not enough.
    :alt: CI
    :target: https://github.com/arunanshub/sphinx-nested-apidoc/actions/workflows/ci.yml
 
+.. image:: https://coveralls.io/repos/github/arunanshub/sphinx-nested-apidoc/badge.svg?branch=master
+   :target: https://coveralls.io/github/arunanshub/sphinx-nested-apidoc?branch=master
+
 .. image:: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc/branch/master/graph/badge.svg?token=8VHvtix0FR
    :target: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc
    :alt: Coverage
