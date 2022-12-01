@@ -9,9 +9,6 @@ When flattened is not enough.
 
 .. image:: https://coveralls.io/repos/github/arunanshub/sphinx-nested-apidoc/badge.svg?branch=master
    :target: https://coveralls.io/github/arunanshub/sphinx-nested-apidoc?branch=master
-
-.. image:: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc/branch/master/graph/badge.svg?token=8VHvtix0FR
-   :target: https://codecov.io/gh/arunanshub/sphinx-nested-apidoc
    :alt: Coverage
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
