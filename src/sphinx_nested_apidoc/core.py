@@ -4,6 +4,7 @@ import functools
 import glob
 import logging
 import os
+import shutil
 import sys
 from contextlib import redirect_stdout
 from os import path
@@ -332,5 +333,5 @@ def rename_files(
             logger.warning("%s already exists. Skipping.", dest_path)
             continue
 
-        os.replace(source_file, dest_path)
+        shutil.move(source_file, dest_path)
         logger.info("%s -> %s", source_file, dest_path)
