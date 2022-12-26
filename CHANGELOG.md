@@ -1,3 +1,9 @@
+## v1.2.2 (2022-12-26)
+
+### Fix
+
+- **core**: use `shutil.move` to move/rename files
+
 ## v1.2.1 (2022-11-06)
 
 ### Refactor

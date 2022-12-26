@@ -6,7 +6,7 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 LOGGER_FORMAT = "[{levelname}: {filename}:{lineno}]: {message}"
 
-__version__ = "1.2.1"
+__version__ = "1.2.2"
 
 
 def start_logging(
