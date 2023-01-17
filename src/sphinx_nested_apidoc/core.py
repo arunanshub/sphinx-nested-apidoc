@@ -47,13 +47,13 @@ def _add_flag_if_not_present(
         arg.append(flag)
 
 
-def sanitize_path(p: str) -> str:
+def sanitize_path(path_: str) -> str:
     """
     Eliminates double slashes and relative path nastiness from the given path
     by treating them as relative to root path.
 
     Args:
-        p: A string representing the path to be sanitized.
+        path_: A string representing the path to be sanitized.
 
     Returns:
         Sanitized path as string.
@@ -63,7 +63,7 @@ def sanitize_path(p: str) -> str:
         return an empty string.
     """
     try:
-        sanitized = path.relpath(path.join(path.sep, p), path.sep)
+        sanitized = path.relpath(path.join(path.sep, path_), path.sep)
     except ValueError:
         # Windows issue: given path is a different drive. Since it is invalid
         # anyway, we return empty string.
