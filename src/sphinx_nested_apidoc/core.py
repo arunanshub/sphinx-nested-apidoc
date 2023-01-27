@@ -183,14 +183,13 @@ def get_nested_dir_filename(sphinx_source_file: str) -> str:
 
     Args:
         sphinx_source_file: A ``sphinx-apidoc`` generated file.
-        dest_dir: The destination directory where the new fill will be stored.
 
     Returns:
         A string representing the path of the file.
 
     Note:
         It does not handle the case where the source file is actually an index
-        for a module, ie. It does not rename "a.b.module.rst" to
+        for a module, i.e. It does not rename "a.b.module.rst" to
         "some/path/a/b/module/index.rst". Use
         :py:func:`get_destination_filename` for that.
     """
