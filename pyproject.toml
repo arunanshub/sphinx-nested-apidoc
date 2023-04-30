@@ -24,7 +24,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Sphinx = "^6.0.0"
+Sphinx = "^7.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.0.0"
