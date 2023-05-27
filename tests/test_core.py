@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from hypothesis import given
 from hypothesis_fspaths import fspaths
@@ -13,16 +14,16 @@ from . import dotted_filenames
 
 @given(path=fspaths())
 def test_sanitize_path(path: str):
-    sanitized_path = core.sanitize_path(os.fsdecode(path))
-    assert not os.path.isabs(sanitized_path)
+    sanitized_path = core.sanitize_path(Path(os.fsdecode(path)))
+    assert not sanitized_path.is_absolute()
 
 
 @given(dotted_filenames())
 def test_get_nested_dir_filename(filename: str):
-    nested = core.get_nested_dir_filename(filename)
-    path, ext = os.path.splitext(nested)
+    nested = core.get_nested_dir_filename(Path(filename))
+    path, ext = nested.with_suffix(""), nested.suffix
     # the only `.` in nested path is the extension separator.
-    assert not path.count(".")
+    assert not str(path).count(".")
     # the extensions of filename and nested path should match.
     assert os.path.splitext(filename)[-1] == ext
 
