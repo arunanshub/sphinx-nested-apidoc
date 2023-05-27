@@ -167,7 +167,8 @@ def yield_source_files(
         ValueError: If extension starts with a ".".
     """
     if extension.startswith("."):
-        raise ValueError("extension must not start with '.'")
+        msg = "extension must not start with '.'"
+        raise ValueError(msg)
 
     pattern = path.join(
         path.normpath(source_dir),

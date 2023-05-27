@@ -8,7 +8,15 @@ from hypothesis_fspaths import fspaths
 
 @st.composite
 def dotted_filenames(draw: st.DrawFn, maxdepth: int = 15) -> str:
-    """Generates sphinx-apidoc like filenames."""
+    """Generates sphinx-apidoc like filenames.
+
+    Args:
+        draw: A :py:class:`draw.DrawFn` object.
+        maxdepth: The maximum depth of the directory tree.
+
+    Returns:
+        A randomly generated file path.
+    """
     # folder that contains the sphinx-apidoc file
     folder_name = os.fsdecode(draw(fspaths(False)))
     # build a sphinx-apidoc equivalent filename
