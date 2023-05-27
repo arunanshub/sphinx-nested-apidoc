@@ -1,3 +1,10 @@
+## v1.2.3 (2023-05-27)
+
+### Refactor
+
+- **core**: use `Path` instead of bare `os.path` manipulations
+- **core**: change variable name from `p` to `path_`
+
 ## v1.2.2 (2022-12-26)
 
 ### Fix
