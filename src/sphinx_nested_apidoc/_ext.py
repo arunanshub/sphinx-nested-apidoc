@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+from pathlib import Path
 
 if typing.TYPE_CHECKING:
     from sphinx.application import Sphinx
@@ -10,9 +11,9 @@ from .core import feed_sphinx_apidoc, rename_files, sanitize_path
 
 
 def _execute(
-    package_dir: str,
-    doc_dir: str,
-    package_name: str | None,
+    package_dir: Path,
+    doc_dir: Path,
+    package_name: Path | None,
     suffix: str,
     excluded_files: typing.Iterable[str],
     module_first: bool,
@@ -23,8 +24,8 @@ def _execute(
         extra_args.append("--module-first")
 
     feed_sphinx_apidoc(
-        doc_dir,
-        package_dir,
+        str(doc_dir),
+        str(package_dir),
         "--full",  # without `full` sphinx-build cannot find `index.rst`
         *extra_args,
         suffix=suffix,
@@ -44,16 +45,16 @@ def _execute(
 def _builder_inited(app: Sphinx) -> None:
     config = app.config
     docdir = app.srcdir
-    package_dir = config.sphinx_nested_apidoc_package_dir
-    package_name = config.sphinx_nested_apidoc_package_name
-    suffix = config.sphinx_nested_apidoc_suffix
-    excluded_files = config.sphinx_nested_apidoc_excluded_files
-    module_first = config.sphinx_nested_apidoc_module_first
-    implicit_namespaces = config.sphinx_nested_apidoc_implicit_namespaces
+    package_dir: str = config.sphinx_nested_apidoc_package_dir
+    package_name: str = config.sphinx_nested_apidoc_package_name
+    suffix: str = config.sphinx_nested_apidoc_suffix
+    excluded_files: list[str] = config.sphinx_nested_apidoc_excluded_files
+    module_first: bool = config.sphinx_nested_apidoc_module_first
+    implicit_namespaces: bool = config.sphinx_nested_apidoc_implicit_namespaces
     _execute(
-        package_dir,
-        docdir,
-        package_name,
+        Path(package_dir),
+        Path(docdir),
+        Path(package_name),
         suffix,
         excluded_files,
         module_first,

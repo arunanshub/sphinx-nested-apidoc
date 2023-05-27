@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+from pathlib import Path
 
 from . import __version__, start_logging
 from .core import feed_sphinx_apidoc, rename_files, sanitize_path
@@ -132,10 +133,10 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         rename_files(
-            args.destdir,
-            args.module_path,
+            Path(args.destdir),
+            Path(args.module_path),
             package_name=(
-                sanitize_path(args.package_name)
+                sanitize_path(Path(args.package_name))
                 if args.package_name is not None
                 else None
             ),

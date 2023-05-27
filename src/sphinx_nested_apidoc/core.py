@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import functools
-import glob
 import logging
-import os
-import shutil
 import sys
 from contextlib import redirect_stdout
 from os import path
+from pathlib import Path
 from typing import Iterable, Iterator
 
 from sphinx.ext import apidoc
@@ -16,9 +14,9 @@ logger = logging.getLogger(__name__)
 
 
 @functools.lru_cache
-def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
+def _safe_makedirs(name: Path, mode: int = 0o755) -> bool:
     """
-    The same ``os.makedirs``, except that it caches its arguments and returns
+    The same ``Path.mkdir``, except that it caches its arguments and returns
     boolean instead of raising an exception.
 
     Args:
@@ -29,7 +27,7 @@ def _safe_makedirs(name: str, mode: int = 0o755) -> bool:
         ``True`` if directory is created, ``False`` otherwise.
     """
     try:
-        os.makedirs(name, mode, exist_ok=False)
+        name.mkdir(mode, True, False)
     except FileExistsError:
         return False
 
@@ -47,7 +45,7 @@ def _add_flag_if_not_present(
         arg.append(flag)
 
 
-def sanitize_path(path_: str) -> str:
+def sanitize_path(path_: Path) -> Path:
     """
     Eliminates double slashes and relative path nastiness from the given path
     by treating them as relative to root path.
@@ -63,13 +61,13 @@ def sanitize_path(path_: str) -> str:
         return an empty string.
     """
     try:
-        sanitized = path.relpath(path.join(path.sep, path_), path.sep)
+        sanitized = (path.sep / path_).relative_to("/")
     except ValueError:
         # Windows issue: given path is a different drive. Since it is invalid
         # anyway, we return empty string.
-        return ""
+        return Path()
 
-    return "" if sanitized == "." else sanitized
+    return Path() if sanitized == "." else sanitized
 
 
 def feed_sphinx_apidoc(
@@ -151,9 +149,9 @@ def feed_sphinx_apidoc(
 
 
 def yield_source_files(
-    source_dir: str,
+    source_dir: Path,
     extension: str = "rst",
-) -> Iterator[str]:
+) -> Iterator[Path]:
     """Yields files from source directory that end with the given extension.
 
     Args:
@@ -170,14 +168,12 @@ def yield_source_files(
         msg = "extension must not start with '.'"
         raise ValueError(msg)
 
-    pattern = path.join(
-        path.normpath(source_dir),
-        f"*{path.extsep}{extension}",
+    yield from filter(
+        Path.is_file, source_dir.glob(f"*{path.extsep}{extension}")
     )
-    yield from filter(path.isfile, glob.iglob(pattern))
 
 
-def get_nested_dir_filename(sphinx_source_file: str) -> str:
+def get_nested_dir_filename(sphinx_source_file: Path) -> Path:
     """
     Convert a ``sphinx-apidoc`` based source file name into a nested directory
     based path.
@@ -194,27 +190,28 @@ def get_nested_dir_filename(sphinx_source_file: str) -> str:
         "some/path/a/b/module/index.rst". Use
         :py:func:`get_destination_filename` for that.
     """
-    src_filename = path.basename(sphinx_source_file)
-    src_filename, ext = path.splitext(src_filename)
-    return src_filename.replace(".", path.sep) + ext
+    return Path(
+        sphinx_source_file.stem.replace(".", path.sep)
+        + sphinx_source_file.suffix
+    )
 
 
 @functools.lru_cache
-def is_packagedir(directory: str) -> bool:
+def is_packagedir(directory: Path) -> bool:
     """Checks if given directory is a package.
 
     This function caches its input to improve performance.
     """
-    return any("__init__" in name for name in os.listdir(directory))
+    return any(directory.glob("__init__*"))
 
 
 def get_destination_filename(
-    sphinx_source_file: str,
-    package_dir: str,
+    sphinx_source_file: Path,
+    package_dir: Path,
     extension: str = "rst",
     implicit_namespaces: bool = False,
-    package_name: str | None = None,
-) -> str:
+    package_name: Path | None = None,
+) -> Path:
     """
     Convert a ``sphinx-apidoc`` generated source file name into a nested
     directory based path, and rename to "index" files where necessary.
@@ -237,36 +234,32 @@ def get_destination_filename(
     Returns:
         A string representing the path of the file.
     """
-    package_dir = path.normpath(package_dir)
-
-    # determine the source dir component that will be used to derive the
-    # package directory from the sphinx-apidoc generated files.
     if is_packagedir(package_dir) or implicit_namespaces:
-        root_module_name = path.basename(package_dir)
-        source_dir_component = package_dir.rsplit(root_module_name, 1)[0]
+        # /some/path/src => /some/path
+        source_dir_component = package_dir.parent
     else:
+        # /some/path/src/package remains same
         source_dir_component = package_dir
 
-    nested_dir_path = dest_name = get_nested_dir_filename(sphinx_source_file)
-    # determine the original directory path
-    package_dir_path = path.splitext(nested_dir_path)[0]
-    # check whether the package directory exists
-    if path.exists(path.join(source_dir_component, package_dir_path)):
-        dest_name = path.join(
-            package_dir_path,
-            f"index{path.extsep}{extension}",
-        )
+    # package.a.b.rst => package/a/b.rst
+    dest_name = get_nested_dir_filename(sphinx_source_file)
+    # package/a/b.rst => package/a/b
+    package_dir_path = dest_name.with_suffix("")
+    # does /some/path/src/package/a/b exist?
+    if (source_dir_component / package_dir_path).exists():
+        # package/a/b => package/a/b/index.rst
+        dest_name = package_dir_path / f"index{path.extsep}{extension}"
 
-    # "docs/package/b/c/d.rst" => "docs/renamed/b/c/d.rst"
+    # package/a/b.rst => newname/a/b.rst
     if package_name is not None:
-        dest_name = path.join(package_name, dest_name.split(path.sep, 1)[-1])
+        dest_name = package_name / str(dest_name).split(path.sep, 1)[-1]
     return dest_name
 
 
 def rename_files(
-    sphinx_source_dir: str,
-    package_dir: str,
-    package_name: str | None = None,
+    sphinx_source_dir: Path,
+    package_dir: Path,
+    package_name: Path | None = None,
     extension: str = "rst",
     implicit_namespaces: bool = False,
     dry_run: bool = False,
@@ -302,8 +295,8 @@ def rename_files(
     for source_file in yield_source_files(sphinx_source_dir, extension):
         # ignore `index` and `modules` files by default. `modules` is generated
         # when `sphinx-apidoc --full` is not used.
-        # file_name: /a/b/c/docs/index.ext => index.ext => index
-        file_name = path.splitext(path.basename(source_file))[0]
+        # file_name: /a/b/c/docs/index.ext => index
+        file_name = source_file.stem
         if file_name in excluded_files:
             logger.debug("Skipping excluded file: %s", source_file)
             continue
@@ -315,8 +308,8 @@ def rename_files(
             implicit_namespaces,
             package_name,
         )
-        dest_path = path.join(sphinx_source_dir, nested_dir_path)
-        dest_dir = path.split(dest_path)[0]
+        dest_path = sphinx_source_dir / nested_dir_path
+        dest_dir = dest_path.parent
 
         if dry_run:
             logger.info("%s would be changed to %s", source_file, dest_path)
@@ -328,10 +321,10 @@ def rename_files(
         if not _safe_makedirs(dest_dir, mode=0o755):
             logger.debug("makedirs: %s already exists", dest_dir)
 
-        if path.exists(dest_path) and not force:
-            os.remove(source_file)  # remove leftover source files.
+        if dest_path.exists() and not force:
+            source_file.unlink()  # remove leftover source files.
             logger.warning("%s already exists. Skipping.", dest_path)
             continue
 
-        shutil.move(source_file, dest_path)
+        source_file.rename(dest_path)
         logger.info("%s -> %s", source_file, dest_path)
