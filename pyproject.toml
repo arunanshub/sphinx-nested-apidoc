@@ -87,7 +87,20 @@ ignore = [
     "ANN401",
     "B024",
 ]
-select = ["ANN", "B", "E", "F", "W", "I", "RET", "EM", "UP", "C90"]
+select = [
+  "ANN",
+  "B",
+  "E",
+  "F",
+  "W",
+  "I",
+  "RET",
+  "EM",
+  "UP",
+  "C90",
+  "PTH",
+  "SIM",
+]
 
 [tool.ruff.isort]
 required-imports = ["from __future__ import annotations"]
