@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import os
 
-from hypothesis import strategies as st
+from hypothesis import strategies as st, settings, HealthCheck
 from hypothesis_fspaths import fspaths
 
 
+@settings(suppress_health_check=[HealthCheck.too_slow])
 @st.composite
 def dotted_filenames(draw: st.DrawFn, maxdepth: int = 15) -> str:
     """Generates sphinx-apidoc like filenames.
