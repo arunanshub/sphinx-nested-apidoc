@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import enum
 import logging
 from pathlib import Path
 
@@ -24,13 +25,13 @@ Visit <https://github.com/arunanshub/sphinx-nested-apidoc> for more info.
 """
 
 
-def main(argv: list[str] | None = None) -> int:
-    logging_levels = {
-        3: logging.WARNING,
-        4: logging.INFO,
-        5: logging.DEBUG,
-    }
+class LoggingLevel(enum.IntEnum):
+    WARNING = 3
+    INFO = 4
+    DEBUG = 5
 
+
+def main(argv: list[str] | None = None) -> int:
     ps = argparse.ArgumentParser(
         description=APP_DESC,
         epilog=CLI_APP_EPILOG,
@@ -115,9 +116,9 @@ def main(argv: list[str] | None = None) -> int:
     args = ps.parse_args(argv)
     if not args.quiet:
         verbose = args.verbose
-        if args.verbose > 5:
+        if args.verbose > LoggingLevel.WARNING:
             verbose = 5
-        start_logging(logging_levels[verbose])
+        start_logging(LoggingLevel(verbose))
 
     is_help = feed_sphinx_apidoc(
         args.destdir,
@@ -146,7 +147,7 @@ def main(argv: list[str] | None = None) -> int:
             force=args.force,
         )
     except ValueError as e:
-        logger.error("%s", e, exc_info=True)
+        logger.exception("%s", e)
         return 1
 
     return 0

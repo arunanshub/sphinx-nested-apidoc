@@ -28,6 +28,6 @@ def start_logging(
     return handler
 
 
-from ._ext import setup  # noqa: E402
+from ._ext import setup  # noqa: E402,TCH001
 
 __all__ = ["setup"]
