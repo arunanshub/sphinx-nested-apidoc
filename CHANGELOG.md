@@ -1,3 +1,9 @@
+## v1.2.4 (2023-08-01)
+
+### Refactor
+
+- remove magic numbers and add linting rules (#153)
+
 ## v1.2.3 (2023-05-27)
 
 ### Refactor
