@@ -8,14 +8,15 @@ readme = "README.rst"
 scripts = {sphinx-nested-apidoc = "sphinx_nested_apidoc.__main__:main"}
 repository = "https://github.com/arunanshub/sphinx-nested-apidoc"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Intended Audience :: Developers",
-    "Topic :: Documentation :: Sphinx",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Topic :: Documentation :: Sphinx",
 ]
 
 [tool.poetry.urls]
@@ -66,9 +67,9 @@ target-verson = "py38"
 
 [tool.coverage.report]
 exclude_lines = [
-    "pragma: no cover",
-    "if TYPE_CHECKING",
-    "if typing.TYPE_CHECKING",
+  "pragma: no cover",
+  "if TYPE_CHECKING",
+  "if typing.TYPE_CHECKING",
 ]
 
 [tool.pytest.ini_options]
@@ -78,15 +79,10 @@ addopts = "--strict-config --strict-markers"
 line-length = 79
 target-version = "py38"
 exclude = [
-    "docs",
-    "tests",
+  "docs",
+  "tests",
 ]
-ignore = [
-    "ANN101",
-    "ANN102",
-    "ANN401",
-    "B024",
-]
+ignore = ["ANN101", "ANN102", "ANN401", "B024", "PLR0913"]
 select = [
   "ANN",
   "B",
@@ -100,7 +96,14 @@ select = [
   "C90",
   "PTH",
   "SIM",
+  "TCH",
+  "PIE",
+  "TID",
+  "G",
+  "PL",
 ]
 
 [tool.ruff.isort]
 required-imports = ["from __future__ import annotations"]
+combine-as-imports = true
+force-wrap-aliases = true
