@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import enum
 import logging
+import typing
 from pathlib import Path
 
 from . import __version__, start_logging
@@ -26,9 +27,23 @@ Visit <https://github.com/arunanshub/sphinx-nested-apidoc> for more info.
 
 
 class LoggingLevel(enum.IntEnum):
-    WARNING = 3
-    INFO = 4
-    DEBUG = 5
+    WARNING = 0
+    INFO = 1
+    DEBUG = 2
+
+
+# used to convert the --verbose flag count to logging level.
+_count_to_loglevel = {
+    LoggingLevel.WARNING: logging.WARNING,
+    LoggingLevel.INFO: logging.INFO,
+    LoggingLevel.DEBUG: logging.DEBUG,
+}
+
+_T = typing.TypeVar("_T", int, float)
+
+
+def _clip(value: _T, low: _T, high: _T) -> _T:
+    return min(max(value, low), high)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -42,7 +57,7 @@ def main(argv: list[str] | None = None) -> int:
         "-v",
         "--verbose",
         action="count",
-        default=3,
+        default=LoggingLevel.WARNING,
         help="Increase application verbosity."
         " This option is repeatable and will increase verbosity each time it"
         " is repeated. This option cannot be used when -q/--quiet is used.",
@@ -114,11 +129,14 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     args = ps.parse_args(argv)
-    if not args.quiet:
-        verbose = args.verbose
-        if args.verbose > LoggingLevel.WARNING:
-            verbose = 5
-        start_logging(LoggingLevel(verbose))
+    log_level: int
+    if args.quiet:
+        log_level = logging.ERROR
+    else:
+        log_level = _count_to_loglevel[
+            _clip(args.verbose, LoggingLevel.WARNING, LoggingLevel.DEBUG)
+        ]
+    start_logging(log_level)
 
     is_help = feed_sphinx_apidoc(
         args.destdir,
