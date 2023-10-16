@@ -1,3 +1,9 @@
+## v1.2.5 (2023-10-16)
+
+### Fix
+
+- **logging**: count `verbose` flag to gradually increase loglevel (#215)
+
 ## v1.2.4 (2023-08-01)
 
 ### Refactor

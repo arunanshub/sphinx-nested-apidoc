@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sphinx-nested-apidoc"
-version = "1.2.4"
+version = "1.2.5"
 description = "sphinx-nested-apidoc: When flattened is not enough"
 authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
 license = "MIT"
@@ -50,7 +50,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.2.4"
+version = "1.2.5"
 tag_format = "v$version"
 update_changelog_on_bump = true
 changelog_incremental = true

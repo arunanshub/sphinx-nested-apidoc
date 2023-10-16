@@ -9,16 +9,16 @@ from pytest_mock import MockerFixture
 
 from sphinx_nested_apidoc import core
 
-from . import dotted_filenames
+from . import generate_path
 
 
-@given(path=fspaths())
+@given(path=generate_path())
 def test_sanitize_path(path: str):
     sanitized_path = core.sanitize_path(Path(os.fsdecode(path)))
     assert not sanitized_path.is_absolute()
 
 
-@given(dotted_filenames())
+@given(generate_path())
 def test_get_nested_dir_filename(filename: str):
     nested = core.get_nested_dir_filename(Path(filename))
     path, ext = nested.with_suffix(""), nested.suffix
