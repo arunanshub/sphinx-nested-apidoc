@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 
 from hypothesis import given
-from hypothesis_fspaths import fspaths
 from pytest_mock import MockerFixture
 
 from sphinx_nested_apidoc import core
