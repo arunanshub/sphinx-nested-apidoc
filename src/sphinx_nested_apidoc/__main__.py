@@ -39,7 +39,7 @@ _count_to_loglevel = {
     LoggingLevel.DEBUG: logging.DEBUG,
 }
 
-_T = typing.TypeVar("_T", int, float)
+_T = typing.TypeVar("_T", bound=int)
 
 
 def _clip(value: _T, low: _T, high: _T) -> _T:
