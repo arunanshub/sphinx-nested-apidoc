@@ -592,19 +592,6 @@ redis = ["redis (>=3.0.0)"]
 zoneinfo = ["backports.zoneinfo (>=0.2.1)", "tzdata (>=2023.3)"]
 
 [[package]]
-name = "hypothesis-fspaths"
-version = "0.1"
-description = "Hypothesis extension for generating filesystem paths"
-optional = false
-python-versions = "*"
-files = [
-    {file = "hypothesis-fspaths-0.1.tar.gz", hash = "sha256:d1124ddc2a37cb54cdaa573bb16a40841a37598c8fc7b83dd07babffc6b01368"},
-]
-
-[package.dependencies]
-hypothesis = "*"
-
-[[package]]
 name = "identify"
 version = "2.5.30"
 description = "File identification library for Python"
@@ -1733,4 +1720,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "f30649f810c7e016d979f8f0a5d409ee85f3d4a03fd303c5e7c4314036c4df89"
+content-hash = "e07078d6ef4845cadd3c423d16b4a6cbaa75f327e85f77f4c636612854d081e2"
