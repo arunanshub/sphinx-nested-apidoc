@@ -1,3 +1,9 @@
+## v1.2.6 (2023-10-19)
+
+### Refactor
+
+- **main**: typevar `bound` should be `int` (#225)
+
 ## v1.2.5 (2023-10-16)
 
 ### Fix
