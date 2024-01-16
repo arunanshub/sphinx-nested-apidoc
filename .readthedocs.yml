@@ -7,7 +7,7 @@ build:
   jobs:
     post_create_environment:
       - pip install pdm
-      - pdm export -G docs --self -o requirements-sphinx.txt
+      - pdm export --without-hashes -G docs --self -o requirements-sphinx.txt
 
 sphinx:
   configuration: docs/conf.py
