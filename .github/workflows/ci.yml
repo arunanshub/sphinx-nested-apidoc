@@ -17,16 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PDM
-        run: pipx install pdm
-
       - name: Install Python
         uses: actions/setup-python@v5
         id: setup-python
         with:
           python-version: ">=3.9"
-          cache: pip
-          cache-dependency-path: '**/pdm.lock'
+
+      - name: Setup PDM
+        uses: "pdm-project/setup-pdm@v3.3"
+        id: setup-pdm
+        with:
+          cache: true
 
       - name: Install dependencies
         run: pdm install
@@ -54,16 +55,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PDM
-        run: |
-          pipx install pdm
-
       - name: Install Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
-          cache-dependency-path: '**/pdm.lock'
+
+      - name: Setup PDM
+        uses: "pdm-project/setup-pdm@v3.3"
+        id: setup-pdm
+        with:
+          cache: true
 
       - name: Install Dependencies
         run: pdm install
@@ -118,15 +119,16 @@ jobs:
           tag_name: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install PDM
-        run: pipx install PDM
-
       - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '>=3.8'
-          cache: pip
-          cache-dependency-path: '**/pdm.lock'
+          python-version: ">=3.9"
+
+      - name: Setup PDM
+        uses: "pdm-project/setup-pdm@v3.3"
+        id: setup-pdm
+        with:
+          cache: true
 
       - name: Publish Package
         run: pdm publish -u __token__ -p "$PYPI_PASSWORD"
