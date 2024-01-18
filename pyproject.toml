@@ -32,7 +32,7 @@ repository = "https://github.com/arunanshub/sphinx-nested-apidoc"
 sphinx-nested-apidoc = "sphinx_nested_apidoc.__main__:main"
 
 [tool.pdm]
-package-type = "library"
+distribution = true
 
 [tool.pdm.dev-dependencies]
 dev = [
