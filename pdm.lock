@@ -340,7 +340,7 @@ files = [
 
 [[package]]
 name = "hypothesis"
-version = "6.96.2"
+version = "6.97.1"
 requires_python = ">=3.8"
 summary = "A library for property-based testing"
 groups = ["test"]
@@ -350,8 +350,8 @@ dependencies = [
     "sortedcontainers<3.0.0,>=2.1.0",
 ]
 files = [
-    {file = "hypothesis-6.96.2-py3-none-any.whl", hash = "sha256:34b5fb4c487f159083fa5db186b4357b42a27e597795e9cbccead8cde0242060"},
-    {file = "hypothesis-6.96.2.tar.gz", hash = "sha256:524a0ac22c8dfff640f21f496b85ee193a470e8570ab7707b8e3bfccd7da34a6"},
+    {file = "hypothesis-6.97.1-py3-none-any.whl", hash = "sha256:02c06828bb73303a4b6c1735f62af055553a9395f2dadd711d8322aa569b8279"},
+    {file = "hypothesis-6.97.1.tar.gz", hash = "sha256:73bbe3c9f5ee647ed0bcf5fc5a4b752391142583a6bdb7825ac8ddc1339a6618"},
 ]
 
 [[package]]
@@ -602,8 +602,8 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "7.4.4"
-requires_python = ">=3.7"
+version = "8.0.0"
+requires_python = ">=3.8"
 summary = "pytest: simple powerful testing with Python"
 groups = ["test"]
 dependencies = [
@@ -611,12 +611,12 @@ dependencies = [
     "exceptiongroup>=1.0.0rc8; python_version < \"3.11\"",
     "iniconfig",
     "packaging",
-    "pluggy<2.0,>=0.12",
+    "pluggy<2.0,>=1.3.0",
     "tomli>=1.0.0; python_version < \"3.11\"",
 ]
 files = [
-    {file = "pytest-7.4.4-py3-none-any.whl", hash = "sha256:b090cdf5ed60bf4c45261be03239c2c1c22df034fbffe691abe93cd80cea01d8"},
-    {file = "pytest-7.4.4.tar.gz", hash = "sha256:2cf0005922c6ace4a3e2ec8b4080eb0d9753fdc93107415332f50ce9e7994280"},
+    {file = "pytest-8.0.0-py3-none-any.whl", hash = "sha256:50fb9cbe836c3f20f0dfa99c565201fb75dc54c8d76373cd1bde06b06657bdb6"},
+    {file = "pytest-8.0.0.tar.gz", hash = "sha256:249b1b0864530ba251b7438274c4d251c58d868edaaec8762893ad4a0d71c36c"},
 ]
 
 [[package]]
