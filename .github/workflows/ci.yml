@@ -40,8 +40,7 @@ jobs:
 
       - name: Lint with Mypy and Flake8
         run: |
-          pdm run pre-commit run --all mypy
-          pdm run pre-commit run --all ruff
+          pdm run pre-commit run --all
 
   build:
     needs: [lint]
@@ -77,7 +76,7 @@ jobs:
         uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949 # v2.2.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "./coverage.lcov"
+          file: "./coverage.lcov"
           parallel: true
           flag-name: run-${{ matrix.os }}-python-${{ matrix.python-version }}
 
