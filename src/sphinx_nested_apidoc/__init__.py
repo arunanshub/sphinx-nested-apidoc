@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import logging
 
+from ._version import __version__
+
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 LOGGER_FORMAT = "[{levelname}: {filename}:{lineno}]: {message}"
-
-__version__ = "1.2.6"
 
 
 def start_logging(
@@ -30,4 +30,4 @@ def start_logging(
 
 from ._ext import setup  # noqa: E402,TCH001
 
-__all__ = ["setup"]
+__all__ = ["setup", "__version__"]
