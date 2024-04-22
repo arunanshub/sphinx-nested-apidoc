@@ -17,7 +17,7 @@ class PathLike(os.PathLike):
 
 @st.composite
 def generate_path(draw: st.DrawFn, *, allow_pathlike=True) -> str | PathLike:
-    windows_path_re = re.compile(r"^([A-z]:\\)?(\w+\\)*(\w+\.)+\w+$")
+    windows_path_re = re.compile(r"^([A-Za-z]:\\)?(\w+\\)*(\w+\.)+\w+$")
     unix_path_re = re.compile(r"^\/?(\w+\/)*(\w+\.)+\w+$")
     windows_path_strategy = st.from_regex(windows_path_re, fullmatch=True)
     unix_path_strategy = st.from_regex(unix_path_re, fullmatch=True)
