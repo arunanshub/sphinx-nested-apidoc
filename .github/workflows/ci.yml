@@ -132,8 +132,8 @@ jobs:
       - name: Publish Package
         run: pdm publish
         env:
-          PDM_PYPI_USERNAME: __token__
-          PDM_PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          PDM_PUBLISH_USERNAME: __token__
+          PDM_PUBLISH_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
   finish:
     needs: [build]
