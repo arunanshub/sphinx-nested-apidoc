@@ -1,3 +1,9 @@
+## v1.2.7 (2024-04-22)
+
+### Fix
+
+- **_ext**: use string literals and proper types (#328)
+
 ## v1.2.6 (2023-10-19)
 
 ### Refactor
