@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import types
 import typing
 from pathlib import Path
 
@@ -63,13 +64,12 @@ def _builder_inited(app: Sphinx) -> None:
 
 
 def setup(app: Sphinx) -> dict[str, str | bool]:
-    rebuild_cond = "env"
     app.connect("builder-inited", _builder_inited)
     # package_dir is where our package to document resides.
     app.add_config_value(
         "sphinx_nested_apidoc_package_dir",
         None,
-        rebuild_cond,
+        "env",
         [str],
     )
     # Name of the directory to put the package documentation in. By
@@ -77,28 +77,28 @@ def setup(app: Sphinx) -> dict[str, str | bool]:
     app.add_config_value(
         "sphinx_nested_apidoc_package_name",
         None,
-        rebuild_cond,
-        [str, None],
+        "env",
+        [str, types.NoneType],
     )
     # The suffix of the generated documentation files.
     app.add_config_value(
         "sphinx_nested_apidoc_suffix",
         "rst",
-        rebuild_cond,
+        "env",
         [str],
     )
     # List of files to exclude from modification/renaming.
     app.add_config_value(
         "sphinx_nested_apidoc_excluded_files",
         ("index", "modules"),
-        rebuild_cond,
+        "env",
         [list],
     )
     # put module documentation before submodule documentation.
     app.add_config_value(
         "sphinx_nested_apidoc_module_first",
         False,
-        rebuild_cond,
+        "env",
         [bool],
     )
     # interpret module paths according to PEP-0420 implicit namespaces
@@ -106,7 +106,7 @@ def setup(app: Sphinx) -> dict[str, str | bool]:
     app.add_config_value(
         "sphinx_nested_apidoc_implicit_namespaces",
         False,
-        rebuild_cond,
+        "env",
         [bool],
     )
 
