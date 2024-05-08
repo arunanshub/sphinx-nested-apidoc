@@ -73,7 +73,7 @@ jobs:
         run: pdm run pytest -n auto --dist=worksteal --cov=src/ --cov-report=lcov --cov-branch
 
       - name: Upload Coverage Report
-        uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949 # v2.2.3
+        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # v2.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: "./coverage.lcov"
@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Finish Coverage Report
-        uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949 # v2.2.3
+        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # v2.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
