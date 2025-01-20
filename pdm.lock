@@ -391,7 +391,7 @@ files = [
 
 [[package]]
 name = "hypothesis"
-version = "6.123.2"
+version = "6.124.1"
 requires_python = ">=3.9"
 summary = "A library for property-based testing"
 groups = ["test"]
@@ -401,8 +401,8 @@ dependencies = [
     "sortedcontainers<3.0.0,>=2.1.0",
 ]
 files = [
-    {file = "hypothesis-6.123.2-py3-none-any.whl", hash = "sha256:0a8bf07753f1436f1b8697a13ea955f3fef3ef7b477c2972869b1d142bcdb30e"},
-    {file = "hypothesis-6.123.2.tar.gz", hash = "sha256:02c25552783764146b191c69eef69d8375827b58a75074055705ab8fdbc95fc5"},
+    {file = "hypothesis-6.124.1-py3-none-any.whl", hash = "sha256:40c8be982d3a79b26d5ae11b6606189784f1654f3c750ffcb99fc5b352d5e2ba"},
+    {file = "hypothesis-6.124.1.tar.gz", hash = "sha256:6e21995c3cb3198ef7e60853acce1fbaa6c16de59c2fb3158845664dfe639bd9"},
 ]
 
 [[package]]
@@ -670,13 +670,13 @@ files = [
 
 [[package]]
 name = "pygments"
-version = "2.19.0"
+version = "2.19.1"
 requires_python = ">=3.8"
 summary = "Pygments is a syntax highlighting package written in Python."
 groups = ["default", "docs"]
 files = [
-    {file = "pygments-2.19.0-py3-none-any.whl", hash = "sha256:4755e6e64d22161d5b61432c0600c923c5927214e7c956e31c23923c89251a9b"},
-    {file = "pygments-2.19.0.tar.gz", hash = "sha256:afc4146269910d4bdfabcd27c24923137a74d562a23a320a41a55ad303e19783"},
+    {file = "pygments-2.19.1-py3-none-any.whl", hash = "sha256:9ea1544ad55cecf4b8242fab6dd35a93bbce657034b0611ee383099054ab6d8c"},
+    {file = "pygments-2.19.1.tar.gz", hash = "sha256:61c16d2a8576dc0649d9f39e089b5f02bcd27fba10d8fb4dcc28173f7a45151f"},
 ]
 
 [[package]]
@@ -1050,7 +1050,7 @@ files = [
 
 [[package]]
 name = "virtualenv"
-version = "20.28.1"
+version = "20.29.1"
 requires_python = ">=3.8"
 summary = "Virtual Python Environment builder"
 groups = ["dev"]
@@ -1061,8 +1061,8 @@ dependencies = [
     "platformdirs<5,>=3.9.1",
 ]
 files = [
-    {file = "virtualenv-20.28.1-py3-none-any.whl", hash = "sha256:412773c85d4dab0409b83ec36f7a6499e72eaf08c80e81e9576bca61831c71cb"},
-    {file = "virtualenv-20.28.1.tar.gz", hash = "sha256:5d34ab240fdb5d21549b76f9e8ff3af28252f5499fb6d6f031adac4e5a8c5329"},
+    {file = "virtualenv-20.29.1-py3-none-any.whl", hash = "sha256:4e4cb403c0b0da39e13b46b1b2476e505cb0046b25f242bee80f62bf990b2779"},
+    {file = "virtualenv-20.29.1.tar.gz", hash = "sha256:b8b8970138d32fb606192cb97f6cd4bb644fa486be9308fb9b63f81091b5dc35"},
 ]
 
 [[package]]
