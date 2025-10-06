@@ -62,7 +62,7 @@ files = [
 
 [[package]]
 name = "beautifulsoup4"
-version = "4.14.0"
+version = "4.14.2"
 requires_python = ">=3.7.0"
 summary = "Screen-scraping library"
 groups = ["docs"]
@@ -71,19 +71,19 @@ dependencies = [
     "typing-extensions>=4.0.0",
 ]
 files = [
-    {file = "beautifulsoup4-4.14.0-py3-none-any.whl", hash = "sha256:aee96fbccdf2d2a8d1288b2afa51fc76bb60823b7881a50fb1ed5f711d1a7d73"},
-    {file = "beautifulsoup4-4.14.0.tar.gz", hash = "sha256:e6150e53c8a52fd4f3b9b28839f8f0fb7c7f029d3c953a50b1762b0947c3cf85"},
+    {file = "beautifulsoup4-4.14.2-py3-none-any.whl", hash = "sha256:5ef6fa3a8cbece8488d66985560f97ed091e22bbc4e9c2338508a9d5de6d4515"},
+    {file = "beautifulsoup4-4.14.2.tar.gz", hash = "sha256:2a98ab9f944a11acee9cc848508ec28d9228abfd522ef0fad6a02a72e0ded69e"},
 ]
 
 [[package]]
 name = "certifi"
-version = "2025.8.3"
+version = "2025.10.5"
 requires_python = ">=3.7"
 summary = "Python package for providing Mozilla's CA Bundle."
 groups = ["default", "docs"]
 files = [
-    {file = "certifi-2025.8.3-py3-none-any.whl", hash = "sha256:f6c12493cfb1b06ba2ff328595af9350c65d6644968e5d3a2ffd78699af217a5"},
-    {file = "certifi-2025.8.3.tar.gz", hash = "sha256:e564105f78ded564e3ae7c923924435e1daa7463faeab5bb932bc53ffae63407"},
+    {file = "certifi-2025.10.5-py3-none-any.whl", hash = "sha256:0f212c2744a9bb6de0c56639a6f68afe01ecd92d91f14ae897c4fe7bbeeef0de"},
+    {file = "certifi-2025.10.5.tar.gz", hash = "sha256:47c09d31ccf2acf0be3f701ea53595ee7e0b8fa08801c6624be771df09ae7b43"},
 ]
 
 [[package]]
@@ -495,7 +495,7 @@ files = [
 
 [[package]]
 name = "hypothesis"
-version = "6.140.2"
+version = "6.140.3"
 requires_python = ">=3.9"
 summary = "A library for property-based testing"
 groups = ["test"]
@@ -505,19 +505,19 @@ dependencies = [
     "sortedcontainers<3.0.0,>=2.1.0",
 ]
 files = [
-    {file = "hypothesis-6.140.2-py3-none-any.whl", hash = "sha256:4524cb84be90961563ef15634e2efe96150bbcce47621a13cff3c1b03a326663"},
-    {file = "hypothesis-6.140.2.tar.gz", hash = "sha256:b3b4a162134eeef8a992621de6c43d80e03d44704a3c3bfb5b9d0661b375b0d2"},
+    {file = "hypothesis-6.140.3-py3-none-any.whl", hash = "sha256:a2cfff51641a58a56081f5c90ae1da6ccf3d043404f411805f7f0e0d75742d0e"},
+    {file = "hypothesis-6.140.3.tar.gz", hash = "sha256:4f4a09bf77af21e0cc3dffed1ea639812dc75d38f81308ec9fb0e33f8557b0cb"},
 ]
 
 [[package]]
 name = "identify"
-version = "2.6.14"
+version = "2.6.15"
 requires_python = ">=3.9"
 summary = "File identification library for Python"
 groups = ["dev"]
 files = [
-    {file = "identify-2.6.14-py2.py3-none-any.whl", hash = "sha256:11a073da82212c6646b1f39bb20d4483bfb9543bd5566fec60053c4bb309bf2e"},
-    {file = "identify-2.6.14.tar.gz", hash = "sha256:663494103b4f717cb26921c52f8751363dc89db64364cd836a9bf1535f53cd6a"},
+    {file = "identify-2.6.15-py2.py3-none-any.whl", hash = "sha256:1181ef7608e00704db228516541eb83a88a9f94433a8c80bb9b5bd54b1d81757"},
+    {file = "identify-2.6.15.tar.gz", hash = "sha256:e4f4864b96c6557ef2a1e1c951771838f4edc9df3a72ec7118b338801b11c7bf"},
 ]
 
 [[package]]
